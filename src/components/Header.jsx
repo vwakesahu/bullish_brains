@@ -2,19 +2,41 @@ import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import Logo from '../img/logo.png'
 import Avatar from '../img/avatar.png';
-import { AiOutlinePlus } from 'react-icons/ai';
-import { FaShoppingCart } from 'react-icons/fa';
-import { FiMenu } from 'react-icons/fi';
+import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
+import { app } from '../firebase.config';
 
+import { FiMenu } from 'react-icons/fi';
+import { actionType } from '../context/reducer';
 
 import { TbLogout } from 'react-icons/tb';
 
 import { motion } from "framer-motion";
+import { useStateValue } from '../context/StateProvider';
 
 
 const Header = () => {
+  const firebaseAuth = getAuth(app);
+  const provider = new GoogleAuthProvider();
 
     const [isMenu, setIsMenu] = useState(false);
+    const [{ user }, dispatch] = useStateValue();
+
+
+
+    const login = async () => {
+      if (!user) {
+        const {
+          user: { refreshToken, providerData },
+        } = await signInWithPopup(firebaseAuth, provider);
+        dispatch({
+          type: actionType.SET_USER,
+          user: providerData[0],
+        });
+        localStorage.setItem("user", JSON.stringify(providerData[0]));
+      } else {
+        setIsMenu(!isMenu);
+      }
+    };
 
 
 
@@ -22,7 +44,7 @@ const Header = () => {
         <header className='fixed z-50 w-screen p-3 px-4 md:p-6 md:px-16 bg-primary'>
             {/* Desktop & Tablet*/}
             <div className="hidden md:flex w-full h-full items-center justify-between">
-            <Link to={""} className='flex items-center gap-2'> 
+            <Link to={"/"} className='flex items-center gap-2'> 
           <img src={Logo} className='w-[70px] -mt-2 object-cover' alt="logo" />
           <p className='text-headingColor text-3xl font-bold relative'>Bullish Brains<p className='text-[10px] -mt-[15px]'>-By Initiators</p></p>
         </Link>
@@ -50,9 +72,10 @@ const Header = () => {
           <div className="relative">
             <motion.img
               whileTap={{ scale: 0.6 }}
-              src={Avatar}
+              src={user ? user.photoURL : Avatar}
               className="w-10 min-w-[40px] h-10 min-h-[40px] drop-shadow-xl cursor-pointer rounded-full"
               alt="userprofile"
+              onClick={login}
             />
             {isMenu && (
               <motion.div
@@ -84,14 +107,14 @@ const Header = () => {
                 </div>
                 <Link to={"/"} className='flex items-center gap-0'>
                     <img src={Logo} className='w-12 object-cover' alt="logo" />
-                    <p className='text-headingColor text-2xl font-bold'>TEEN</p>
+                    <p className='text-headingColor text-2xl font-bold'>Bullish Brains</p>
                 </Link>
 
 
                 <div className='relative'>
                     <motion.img
                         whileTap={{ scale: 0.6 }}
-                        src={Avatar}
+                        src={user ? user.photoURL : Avatar}
                         className='w-10 min-w-[40px] h-10 min-h-[40px] drop-shadow-xl cursor-pointer rounded-full'
                         alt="user profile"
                     />
