@@ -4,10 +4,10 @@ import Logo from '../img/logo.png'
 import Avatar from '../img/avatar.png';
 import { AiOutlinePlus } from 'react-icons/ai';
 import { FaShoppingCart } from 'react-icons/fa';
+import { FiMenu } from 'react-icons/fi';
+
 
 import { TbLogout } from 'react-icons/tb';
-
-
 
 import { motion } from "framer-motion";
 
@@ -78,11 +78,8 @@ const Header = () => {
             <div className='flex items-center justify-between md:hidden w-full h-full'>
 
                 <div className='relative flex items-center justify-center -left-6' >
-                    <FaShoppingCart className='text-textColor text-3xl ml-8 cursor-pointer' />
+                    <FiMenu className='text-textColor text-3xl ml-8 cursor-pointer' />
 
-                    <div className='absolute -top-2 -right-2 w-5 h-5 rounded-full bg-cartNumBg flex items-center justify-center'>
-                        <p className='text-xs text-white font-semibold'>{89}</p>
-                    </div>
 
                 </div>
                 <Link to={"/"} className='flex items-center gap-0'>
@@ -107,7 +104,7 @@ const Header = () => {
                                 className='w-40 bg-green-50 shadow-xl rounded-lg flex flex-col absolute top-12 right-0'>
 
                                 <Link to={'/createItem'}>
-                                    <p className='px-4 py-2 flex items-center gap-3 cursor-pointer hover:bg-slate-200 transition-all duration-100 ease-in-out text-textColor text-base'>New Item <AiOutlinePlus /></p>
+                                    <p className='px-4 py-2 flex items-center gap-3 cursor-pointer hover:bg-slate-200 transition-all duration-100 ease-in-out text-textColor text-base'>New Item <FiMenu /></p>
                                 </Link>
 
 
