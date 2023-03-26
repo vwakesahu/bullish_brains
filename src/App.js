@@ -5,6 +5,7 @@ import CreateContainer from './components/CreateContainer';
 import MainContainer from './components/MainContainer';
 import { AnimatePresence } from "framer-motion";
 import AboutUs from './components/AboutUs';
+import DoughnutChart from './components/DoughnutChart';
 
 
 
@@ -20,6 +21,9 @@ const App = () => {
             <Route path="/*" element={<MainContainer />} />
             <Route path="/createItem" element={<CreateContainer />} />
             <Route path="/about-us" element={<AboutUs />} />
+
+            <Route path="/dash" element={<DoughnutChart />} />
+
           </Routes>
         </main>
       </div>
