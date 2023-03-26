@@ -6,6 +6,7 @@ import MainContainer from './components/MainContainer';
 import { AnimatePresence } from "framer-motion";
 import AboutUs from './components/AboutUs';
 import DoughnutChart from './components/DoughnutChart';
+import StocksNews from './components/StocksNews';
 
 
 
@@ -23,6 +24,8 @@ const App = () => {
             <Route path="/about-us" element={<AboutUs />} />
 
             <Route path="/dash" element={<DoughnutChart />} />
+
+            <Route path="/news" element={<StocksNews />} />
 
           </Routes>
         </main>

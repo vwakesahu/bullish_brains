@@ -93,7 +93,7 @@ const Header = () => {
                 />
               </div>
               <button
-                className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
+                className="bg-yellow-400 hover:bg-red-400 text-white font-bold py-2 px-4 rounded-full"
                 type="submit"
                 onClick={callSearchFunction}
               >
@@ -103,8 +103,10 @@ const Header = () => {
 
 
 
+            <Link to={"news"} className='flex items-center gap-2'>
 
             <li className='text-base text-textColor hover:text-headingColor duration-100 transition-all ease-in-out cursor-pointer'>News</li>
+            </Link>
             <Link to={"about-us"} className='flex items-center gap-2'>
               <li className='text-base text-textColor hover:text-headingColor duration-100 transition-all ease-in-out cursor-pointer'>About Us</li>
             </Link>
