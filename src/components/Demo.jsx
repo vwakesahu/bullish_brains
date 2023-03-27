@@ -1,44 +1,53 @@
-//this line imports react functionality
-import React from 'react';
-import { useEffect, useState } from "react";
-import { LineChart, Line, Tooltip } from 'recharts';
-function Demo() {
-    const [error, setError] = useState(null);
-    const [isLoaded, setIsLoaded] = useState(false);
-    const [items, setItems] = useState([]);
-    const data = [];
-    // Note: the empty deps array [] means
-    // this useEffect will run once
-    // similar to componentDidMount()
-    useEffect(() => {
-        fetch("https://api.polygon.io/v2/aggs/grouped/locale/us/market/stocks/2023-01-09?adjusted=true&apiKey=dEtCpQpVDpWNpxRiBBawg4AJDVABf4_b" + process.env.REACT_API)
-            .then(res => res.json())
-            .then(
-                (result) => {
-                    for (var instance in result["Weekly Time Series"]) {
-                        var mydata = (result["Weekly Time Series"][instance])
-                        mydata.date = instance
-                        data.push(mydata)
-                    }
-                    setItems(data.reverse())
+import React, { useEffect, useState } from 'react';
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 
-                    console.log(result);
-                },
-                // Note: it's important to handle errors here
-                // instead of a catch() block so that we don't swallow
-                // exceptions from actual bugs in components.
-                (error) => {
-                    setIsLoaded(true);
-                    setError(error);
-                }
-            )
-    }, [])
-    return (
-        <div>
-            <LineChart width={500} height={250} margin={{ top: 150, right: 30, left: 20, bottom: 5 }} data={items}>
-                <Line dot={false} type="monotone" dataKey="1. open" stroke="rgb(0,200,5)" yAxisId="100" />
-            </LineChart>
-        </div>
-    )
+function Demo() {
+  const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+    let showchartXvalue :[];
+    let showchartYvalue :[];
+
+  useEffect(() => {
+    const fetchData = () => {
+    //   try {
+        fetch("https://www.alphavantage.co/query?function=TIME_SERIES_DAILY_ADJUSTED&symbol=RELIANCE.BSE&outputsize=full&apikey=YYGFPGKNWVMLOYMK").then(function(response){
+            return response.json();
+        }).then(function(data){
+            
+            for(var key in data["Time Series (Daily)"]){
+                // key['']
+                console.log(key);
+            }
+        })        
+        
+    };
+
+    fetchData();
+  }, []);
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return <div>Error: {error.message}</div>;
+  }
+
+  return (
+    <div style={{ width: '100%', height: '100vh', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+      <ResponsiveContainer width="90%" height="80%">
+        <LineChart data={data}>
+          <CartesianGrid strokeDasharray="3 3" />
+          <XAxis dataKey="date" />
+          <YAxis dataKey="open" />
+          <Tooltip />
+          <Legend />
+          <Line type="monotone" dataKey="open" stroke="#8884d8" activeDot={{ r: 8 }} />
+        </LineChart>
+      </ResponsiveContainer>
+    </div>
+  );
 }
-export default Demo
+
+export default Demo;
