@@ -4,12 +4,12 @@ import {Chart, ArcElement} from 'chart.js'
 Chart.register(ArcElement);
 
 const data = {
-  labels: ['Red', 'Blue', 'Yellow'],
+  labels: ['Stocks', 'Bonds', 'Mutual Funds', 'Crpto'],
   datasets: [
     {
       label: '# of Votes',
-      data: [1, 2, 3],
-      backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56'],
+      data: [4, 2, 3, 9],
+      backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#000000'],
       borderWidth: 3,
     },
   ],
