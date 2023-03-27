@@ -1,53 +1,88 @@
-import React, { useEffect, useState } from 'react';
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import { Line } from 'react-chartjs-2';
+import Chart from 'chart.js/auto';
+import 'chartjs-adapter-date-fns';
 
-function Demo() {
-  const [data, setData] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-    let showchartXvalue :[];
-    let showchartYvalue :[];
+const StockChart = () => {
+  const [data, setData] = useState(null);
 
   useEffect(() => {
-    const fetchData = () => {
-    //   try {
-        fetch("https://www.alphavantage.co/query?function=TIME_SERIES_DAILY_ADJUSTED&symbol=RELIANCE.BSE&outputsize=full&apikey=YYGFPGKNWVMLOYMK").then(function(response){
-            return response.json();
-        }).then(function(data){
-            
-            for(var key in data["Time Series (Daily)"]){
-                // key['']
-                console.log(key);
-            }
-        })        
-        
+    const fetchData = async () => {
+      const result = await axios.get(
+        'https://www.alphavantage.co/query?function=TIME_SERIES_DAILY_ADJUSTED&symbol=RELIANCE.BSE&outputsize=full&apikey=YYGFPGKNWVMLOYMK'
+      );
+      setData(result.data['Time Series (Daily)']);
     };
-
     fetchData();
   }, []);
 
-  if (loading) {
-    return <div>Loading...</div>;
-  }
+  const chartData = {
+    labels: data ? Object.keys(data).reverse() : [],
+    datasets: [
+      {
+        label: 'Reliance Stock Price',
+        data: data
+          ? Object.keys(data)
+              .reverse()
+              .map((date) => {
+                return {
+                  x: date,
+                  y: parseFloat(data[date]['4. close']),
+                };
+              })
+          : [],
+        fill: false,
+        backgroundColor: '#3f51b5',
+        borderColor: '#3f51b5',
+      },
+    ],
+  };
 
-  if (error) {
-    return <div>Error: {error.message}</div>;
-  }
+  const options = {
+    responsive: true,
+    plugins: {
+      legend: {
+        display: true,
+        labels: {
+          font: {
+            size: 16,
+          },
+        },
+      },
+    },
+    scales: {
+      x: {
+        type: 'time',
+        adapters: {
+          date: require('chartjs-adapter-date-fns'),
+        },
+        time: {
+          unit: 'day',
+          displayFormats: {
+            day: 'MMM d',
+          },
+        },
+      },
+      y: {
+        ticks: {
+          callback: function (value, index, values) {
+            return '₹' + value;
+          },
+        },
+      },
+    },
+  };
 
   return (
-    <div style={{ width: '100%', height: '100vh', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-      <ResponsiveContainer width="90%" height="80%">
-        <LineChart data={data}>
-          <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="date" />
-          <YAxis dataKey="open" />
-          <Tooltip />
-          <Legend />
-          <Line type="monotone" dataKey="open" stroke="#8884d8" activeDot={{ r: 8 }} />
-        </LineChart>
-      </ResponsiveContainer>
+    <div>
+      {data ? (
+        <Line data={chartData} options={options} />
+      ) : (
+        <p>Loading data...</p>
+      )}
     </div>
   );
-}
+};
 
-export default Demo;
+export default StockChart;

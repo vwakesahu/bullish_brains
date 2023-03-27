@@ -2167,7 +2167,7 @@
 
 "@kurkle/color@^0.3.0":
   version "0.3.2"
-  resolved "https://registry.npmjs.org/@kurkle/color/-/color-0.3.2.tgz"
+  resolved "https://registry.yarnpkg.com/@kurkle/color/-/color-0.3.2.tgz#5acd38242e8bde4f9986e7913c8fdf49d3aa199f"
   integrity sha512-fuscdXJ9G1qb7W8VdHi+IwRqij3lBkosAm4ydQtEmbY58OzHXqQhvlxqEkoz0yssNVn38bcpRWgA9PP+OGoisw==
 
 "@leichtgewicht/ip-codec@^2.0.1":
@@ -3851,6 +3851,11 @@ chart.js@^4.2.1:
   dependencies:
     "@kurkle/color" "^0.3.0"
 
+chartjs-adapter-date-fns@2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/chartjs-adapter-date-fns/-/chartjs-adapter-date-fns-2.0.0.tgz#5e53b2f660b993698f936f509c86dddf9ed44c6b"
+  integrity sha512-rmZINGLe+9IiiEB0kb57vH3UugAtYw33anRiw5kS2Tu87agpetDDoouquycWc9pRsKtQo5j+vLsYHyr8etAvFw==
+
 check-types@^11.1.1:
   version "11.2.2"
   resolved "https://registry.npmjs.org/check-types/-/check-types-11.2.2.tgz"
@@ -4430,6 +4435,11 @@ data-urls@^2.0.0:
     abab "^2.0.3"
     whatwg-mimetype "^2.3.0"
     whatwg-url "^8.0.0"
+
+date-fns@^2.29.3:
+  version "2.29.3"
+  resolved "https://registry.yarnpkg.com/date-fns/-/date-fns-2.29.3.tgz#27402d2fc67eb442b511b70bbdf98e6411cd68a8"
+  integrity sha512-dDCnyH2WnnKusqvZZ6+jA1O51Ibt8ZMRNkDZdyAyK4YfbDwa/cEmuztzG5pk6hqlp9aSBPYcjOlktquahGwGeA==
 
 debug@2.6.9, debug@^2.6.0:
   version "2.6.9"
@@ -7843,6 +7853,11 @@ pkg-up@^3.1.0:
   integrity sha512-nDywThFk1i4BQK4twPQ6TA4RT8bDY96yeuCVBWL3ePARCiEKDRSrNGbFIgUJpLp+XeIR65v8ra7WuJOFUBtkMA==
   dependencies:
     find-up "^3.0.0"
+
+plotly.js-dist-min@^2.20.0:
+  version "2.20.0"
+  resolved "https://registry.yarnpkg.com/plotly.js-dist-min/-/plotly.js-dist-min-2.20.0.tgz#431994a062b27c64f736772c57bd1231418fef65"
+  integrity sha512-zhSRwOed3y/cekPWvzOtdc3AVOmHbDpUry5FNITw2IRKkRirRv7SdWvM7YVqqQd4dTsLHKGDuza+3GoR6+45ZQ==
 
 postcss-attribute-case-insensitive@^5.0.2:
   version "5.0.2"
