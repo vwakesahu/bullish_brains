@@ -28,7 +28,7 @@ const StockChart = () => {
               .map((date) => {
                 return {
                   x: date,
-                  y: parseFloat(data[date]['4. close']),
+                  y: parseFloat(data[date]['1. open']),
                 };
               })
           : [],
@@ -63,12 +63,16 @@ const StockChart = () => {
             day: 'MMM d',
           },
         },
+        ticks: {
+          color: 'gray-600',
+        },
       },
       y: {
         ticks: {
           callback: function (value, index, values) {
-            return '₹' + value;
+            return value;
           },
+          color: 'gray-600',
         },
       },
     },
@@ -76,11 +80,13 @@ const StockChart = () => {
 
   return (
     <div>
-      {data ? (
-        <Line data={chartData} options={options} />
-      ) : (
-        <p>Loading data...</p>
-      )}
+      <div>
+        {data ? (
+          <Line data={chartData} options={options} />
+        ) : (
+          <p>Loading data...</p>
+        )}
+      </div>
     </div>
   );
 };
