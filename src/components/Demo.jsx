@@ -4,17 +4,22 @@ import { Line } from 'react-chartjs-2';
 import Chart from 'chart.js/auto';
 import 'chartjs-adapter-date-fns';
 import { Box, Text } from '@chakra-ui/react';
-import Loader from './Loader';
+import Loader from './Loader'
+const Demo = () => {
+  let stockname='AAPL'
 
-const StockChart = () => {
+  
   const [data, setData] = useState(null);
 
   useEffect(() => {
     const fetchData = async () => {
+      const apikey='YYGFPGKNWVMLOYMK'
+      
+      let apiurl=`https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=IBM&interval=30sec&apikey=${apikey}`
       const result = await axios.get(
-        'https://www.alphavantage.co/query?function=TIME_SERIES_DAILY_ADJUSTED&symbol=RELIANCE.BSE&outputsize=full&apikey=YYGFPGKNWVMLOYMK'
+        apiurl
       );
-      setData(result.data['Time Series (Daily)']);
+      setData(result.data['Time Series (30sec)']);
     };
     fetchData();
   }, []);
@@ -121,6 +126,7 @@ const StockChart = () => {
 
 
 
+
   return (
     <div className="flex flex-col items-center justify-center space-y-4 h-screen">
       {!data ? (
@@ -133,15 +139,13 @@ const StockChart = () => {
           Reliance Stock Price Chart
         </Text>
         <Text fontSize="sm" color="#333" textAlign="center">
-          The chart displays the daily open price of Reliance Industries Ltd. (RELIANCE.BSE) from the last 18 years.
+          The chart displays the daily open price of Reliance Industries Ltd. {stockname} from the last 18 years.
         </Text>
         <Line data={chartData} options={options} className="w-full" />
       </Box>
       )}
     </div>
-  );
-};
+  )
+}
 
-export default StockChart;
-
-
+export default Demo
