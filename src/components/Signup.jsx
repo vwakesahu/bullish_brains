@@ -57,7 +57,7 @@ const Signup = () => {
                                     placeholder="First Name"
                                     value={firstName}
                                     onChange={(e) => setFirstName(e.target.value)}
-                                    className="border-none outline-none w-full text-gray-700 bg-gray-50"
+                                    className="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none"
                                     required
                                 />
                             </div>

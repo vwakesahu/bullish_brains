@@ -58,7 +58,7 @@ const Footer = () => {
         </div>
       </div>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-8 text-center text-gray-400">
-        <p>&copy; {new Date().getFullYear()} StockMarket. All rights reserved.</p>
+        <p>&copy; {new Date().getFullYear()} Bullish Brains. All rights reserved.</p>
       </div>
     </footer>
   );
