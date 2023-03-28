@@ -3,6 +3,8 @@ import axios from 'axios';
 import { Line } from 'react-chartjs-2';
 import Chart from 'chart.js/auto';
 import 'chartjs-adapter-date-fns';
+import { Box, Text } from '@chakra-ui/react';
+import Loader from './Loader';
 
 const StockChart = () => {
   const [data, setData] = useState(null);
@@ -18,29 +20,32 @@ const StockChart = () => {
   }, []);
 
   const chartData = {
-    labels: data ? Object.keys(data).reverse() : [],
+    labels: data ? Object.keys(data).sort() : [],
     datasets: [
       {
         label: 'Reliance Stock Price',
         data: data
           ? Object.keys(data)
-              .reverse()
-              .map((date) => {
-                return {
-                  x: date,
-                  y: parseFloat(data[date]['1. open']),
-                };
-              })
+            .sort()
+            .map((date) => {
+              return {
+                x: date,
+                y: parseFloat(data[date]['1. open']),
+              };
+            })
           : [],
         fill: false,
-        backgroundColor: '#3f51b5',
-        borderColor: '#3f51b5',
+        backgroundColor: 'rgba(255, 221, 65, 0.2)',
+        borderColor: '#ffc107',
+        pointRadius: 0,
       },
     ],
   };
 
   const options = {
+    maintainAspectRatio: true,
     responsive: true,
+    height: 600,
     plugins: {
       legend: {
         display: true,
@@ -48,6 +53,36 @@ const StockChart = () => {
           font: {
             size: 16,
           },
+          color: '#333',
+        },
+      },
+      title: {
+        display: true,
+        text: 'Reliance Industries Ltd. (RELIANCE.BSE)',
+        font: {
+          size: 24,
+          weight: 'bold',
+        },
+        color: '#333',
+        padding: {
+          top: 30,
+          bottom: 10,
+        },
+      },
+      tooltip: {
+        displayColors: false,
+        titleFont: {
+          size: 16,
+          weight: 'bold',
+        },
+        bodyFont: {
+          size: 14,
+        },
+        padding: {
+          top: 10,
+          bottom: 10,
+          left: 10,
+          right: 10,
         },
       },
     },
@@ -64,31 +99,49 @@ const StockChart = () => {
           },
         },
         ticks: {
-          color: 'gray-600',
+          color: '#333',
+        },
+        grid: {
+          color: '#eee',
         },
       },
       y: {
         ticks: {
-          callback: function (value, index, values) {
+          callback: function (value) {
             return value;
           },
-          color: 'gray-600',
+          color: '#333',
+        },
+        grid: {
+          color: '#eee',
         },
       },
     },
   };
 
+
+
   return (
-    <div>
-      <div>
-        {data ? (
-          <Line data={chartData} options={options} />
-        ) : (
-          <p>Loading data...</p>
-        )}
-      </div>
+    <div className="flex flex-col items-center justify-center space-y-4 h-screen">
+      {!data ? (
+        <div className="flex items-center justify-center h-full">
+          <Loader />
+        </div>
+      ) : (
+        <Box className="flex flex-col items-center justify-center" borderRadius="md" boxShadow="md" p={4} w="90%">
+        <Text fontSize="2xl" fontWeight="bold" color="#333" textAlign="center" mb={4}>
+          Reliance Stock Price Chart
+        </Text>
+        <Text fontSize="sm" color="#333" textAlign="center">
+          The chart displays the daily open price of Reliance Industries Ltd. (RELIANCE.BSE) from the last 18 years.
+        </Text>
+        <Line data={chartData} options={options} className="w-full" />
+      </Box>
+      )}
     </div>
   );
 };
 
 export default StockChart;
+
+

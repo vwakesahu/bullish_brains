@@ -7,7 +7,6 @@ import { AnimatePresence } from "framer-motion";
 import AboutUs from './components/AboutUs';
 import DoughnutChart from './components/DoughnutChart';
 import StocksNews from './components/StocksNews';
-import Chart from './components/Demo';
 
 
 
@@ -27,7 +26,6 @@ const App = () => {
             <Route path="/dash" element={<DoughnutChart />} />
 
             <Route path="/news" element={<StocksNews />} />
-            <Route path="/demo" element={<Chart />} />
 
 
 
