@@ -10,6 +10,7 @@ import { app } from '../firebase.config';
 import Avatar from '../img/avatar.png';
 import Logo from '../img/logo.png';
 import { FaSearch } from "react-icons/fa";
+import { TfiDashboard } from 'react-icons/tfi'
 
 
 
@@ -62,7 +63,7 @@ const Header = () => {
 
 
   return (
-    <header className='fixed z-50 w-screen p-3 px-4 md:p-6 md:px-16 bg-primary'>
+    <header className='fixed w-screen p-3 px-4 md:p-4 md:px-16 bg-primary'>
       {/* Desktop & Tablet*/}
       <div className="hidden md:flex w-full h-full items-center justify-between">
         <Link to={"/"} className='flex items-center gap-2'>
@@ -140,8 +141,8 @@ const Header = () => {
                     <Link to={"dash"} className='flex items-center gap-2'>
                       <p className='px-4 py-2 flex items-center gap-3 cursor-pointer hover:bg-slate-200 transition-all duration-100 ease-in-out text-textColor text-base'
 
-                        onClick={() => setIsMenu(false)}
-                      >Dashboard</p>
+                        
+                      ><TfiDashboard />Dashboard</p>
                     </Link>
 
                   )
