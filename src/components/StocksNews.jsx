@@ -25,11 +25,10 @@ function StockPrice() {
 
   return (
     <div className="container mx-auto px-4 py-8">
-      <h1 className="text-4xl font-bold mb-4">Apple Inc. (AAPL)</h1>
 
       {news.length > 0 && (
         <div className="mb-8">
-          <h2 className="text-2xl font-bold mb-4">Latest news</h2>
+          <h1 className="text-4xl font-bold mb-4">Latest news</h1>
           <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
             {news.map((article) => (
               <div key={article.url} className="bg-white shadow-md rounded-lg overflow-hidden">
