@@ -1,12 +1,12 @@
 import React from 'react'
-import { Authprovider } from './StockList'
+import { Authprovider } from './Stock-list provider';
 
 const Chart = () => {
-    const stk=Authprovider();
-    console.log(stk.stockName);
+  const {stockName , setStockName}= Authprovider();
+    console.log(stockName);
   return (
     <div>
-        {stk.stockName}
+        {stockName}
     </div>
   )
 }

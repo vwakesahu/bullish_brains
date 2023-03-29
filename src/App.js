@@ -13,7 +13,8 @@ import Login from './components/LoginContainer';
 import Signup from './components/Signup';
 import WalletContainer from './components/Wallet';
 import Chart from './components/Chart';
-import { Table } from './components/StockList';
+import Table  from './components/StockList';
+import { Authstock } from './components/Stock-list provider';
 
 
 
@@ -25,29 +26,21 @@ const App = () => {
         <Header />
 
         <main className="mt-24 p-8 w-full">
-          <Routes>
-            <Route path="/*" element={<MainContainer />} />
-            <Route path="/createItem" element={<CreateContainer />} />
-            <Route path="/about-us" element={<AboutUs />} />
-            <Route path="/dash" element={<DoughnutChart />} />
-            <Route path="/news" element={<StocksNews />} />
-            <Route path="/demo" element={<Demo />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/sign-up" element={<Signup />} />
-            <Route path="/stock-list" element={<Table />}>
-              <Route path="chart" element={<Table><Chart/></Table>}/>
-            </Route>
-            <Route path="/wallet" element={<WalletContainer />} />
-
-
-
-
-
-
-
-
-
-          </Routes>
+          <Authstock>
+            <Routes>
+              <Route path="/*" element={<MainContainer />} />
+              <Route path="/createItem" element={<CreateContainer />} />
+              <Route path="/about-us" element={<AboutUs />} />
+              <Route path="/dash" element={<DoughnutChart />} />
+              <Route path="/news" element={<StocksNews />} />
+              <Route path="/demo" element={<Demo />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/sign-up" element={<Signup />} />
+              <Route path="/stock-list" element={<Table />}/>
+              <Route path="/chart" element={<Chart/>}/>
+              <Route path="/wallet" element={<WalletContainer />} />
+            </Routes>
+          </Authstock>
         </main>
         <Footer />
       </div>

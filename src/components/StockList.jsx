@@ -1,19 +1,15 @@
-import React, { useState, useEffect, createContext, useContext } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { StateContext } from '../context/StateProvider';
+import { Authprovider } from './Stock-list provider';
 import { useNavigate } from 'react-router-dom';
 
-const authe =createContext(); 
-  export const Table = ({Children}) => {
+const Table = () => {
+  
+  const {stockName , setStockName}= Authprovider();
+  const navigate = useNavigate();
   const [tickers, setTickers] = useState([]);
   const [aggs, setAggs] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
-  const navigate=useNavigate();
-
-  
-  
-  const [stockName, setStockName] = useState(null);
-
 
   useEffect(() => {
 
@@ -67,9 +63,11 @@ const authe =createContext();
             return (
               <tr key={agg.T}>
                 <td className="border px-4 py-2"onClick={() =>{
+                  
+                }}><button type="submit" onClick={() =>{
                   setStockName(agg.T);
-                  navigate('/stock-list/chart')
-                }}>{agg.T}</td>
+                  navigate('/chart');
+                  }}>{agg.T}</button></td>
                 <td className="border px-4 py-2"> <a href={`https://finance.yahoo.com/quote/${agg.T}`} target="_blank" rel="noopener noreferrer">{ticker ? ticker.name : '-'}</a></td>
                 <td className="border px-4 py-2">{agg.o}</td>
                 <td className="border px-4 py-2">{agg.c}</td>
@@ -78,13 +76,8 @@ const authe =createContext();
           })}
         </tbody>
       </table>
-      <StateContext.Provider value={stockName}>
-        {Children}
-      </StateContext.Provider>
     </div>
   );
 };
 
-export const Authprovider= () =>{
-  return(useContext(authe));
-}
+export default Table;
