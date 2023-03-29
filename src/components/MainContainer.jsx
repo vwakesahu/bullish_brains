@@ -6,6 +6,8 @@ import 'chartjs-adapter-date-fns';
 import { Box, Text } from '@chakra-ui/react';
 import Loader from './Loader'
 const MainContainer = () => {
+
+  
   let stockname='AAPL'
 
   
