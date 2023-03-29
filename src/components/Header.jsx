@@ -11,6 +11,7 @@ import Avatar from '../img/avatar.png';
 import Logo from '../img/logo.png';
 import { FaSearch } from "react-icons/fa";
 import { TfiDashboard } from 'react-icons/tfi'
+import WalletContainer from "./Wallet";
 
 
 
@@ -29,6 +30,8 @@ const Header = () => {
         type: actionType.SET_USER,
         user: providerData[0],
       });
+
+      
       localStorage.setItem("user", JSON.stringify(providerData[0]));
     } else {
       setIsMenu(!isMenu);
@@ -138,12 +141,15 @@ const Header = () => {
 
                 {
                   user && (
+
+                    <div>
                     <Link to={"dash"} className='flex items-center gap-2'>
                       <p className='px-4 py-2 flex items-center gap-3 cursor-pointer hover:bg-slate-200 transition-all duration-100 ease-in-out text-textColor text-base'
 
                         
                       ><TfiDashboard />Dashboard</p>
                     </Link>
+                    <WalletContainer /></div>
 
                   )
 
