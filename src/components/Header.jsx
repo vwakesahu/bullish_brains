@@ -149,7 +149,8 @@ const Header = () => {
                         
                       ><TfiDashboard />Dashboard</p>
                     </Link>
-                    <WalletContainer /></div>
+                    <WalletContainer />
+                    </div>
 
                   )
 
