@@ -50,7 +50,6 @@ const MainContainer = () => {
   const options = {
     maintainAspectRatio: true,
     responsive: true,
-    height: 600,
     plugins: {
       legend: {
         display: true,
