@@ -1,63 +1,68 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 
-function StockList() {
-  const [stocks, setStocks] = useState([]);
+const Table = () => {
+  const [tickers, setTickers] = useState([]);
+  const [aggs, setAggs] = useState([]);
+  const [searchTerm, setSearchTerm] = useState('');
 
   useEffect(() => {
     const fetchData = async () => {
-      const response = await fetch(
-        "https://api.polygon.io/v2/aggs/grouped/locale/us/market/stocks/2023-01-09?adjusted=true&apiKey=dEtCpQpVDpWNpxRiBBawg4AJDVABf4_b"
+      const tickersResponse = await axios.get(
+        'https://api.polygon.io/v3/reference/tickers?active=true&apiKey=puzbSbBx44p10VJ5UfWO34IIkz6wi1bI'
       );
-      const data = await response.json();
-      setStocks(data.results);
+      const aggsResponse = await axios.get(
+        'https://api.polygon.io/v2/aggs/grouped/locale/us/market/stocks/2023-01-09?adjusted=true&apiKey=dEtCpQpVDpWNpxRiBBawg4AJDVABf4_b'
+      );
+
+      const commonTickers = aggsResponse.data.results.map((agg) => agg.T).filter((ticker) => {
+        return tickersResponse.data.results.some((t) => t.ticker === ticker);
+      });
+
+      const commonTickersData = tickersResponse.data.results.filter((t) => commonTickers.includes(t.ticker));
+
+      setTickers(commonTickersData);
+      setAggs(aggsResponse.data.results);
     };
+
     fetchData();
   }, []);
 
+  const filteredAggs = aggs.filter((agg) => {
+    const ticker = tickers.find((t) => t.ticker === agg.T);
+    return ticker && ticker.name.toLowerCase().includes(searchTerm.toLowerCase());
+  });
+
   return (
-    <div className="flex justify-center">
-      <table className="min-w-full divide-y divide-gray-200">
-        <thead className="bg-gray-50">
+    <div>
+      <input type="text" placeholder="Search ticker name" value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} />
+      <table className="table-auto">
+        <thead>
           <tr>
-            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-              Ticker
-            </th>
-            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-              Title
-            </th>
-            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-              Open
-            </th>
-            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-              Close
-            </th>
+            <th className="px-4 py-2">Ticker</th>
+            <th className="px-4 py-2">Name</th>
+            <th className="px-4 py-2">Open</th>
+            <th className="px-4 py-2">Close</th>
           </tr>
         </thead>
-        <tbody className="bg-white divide-y divide-gray-200">
-          {stocks.map((stock) => (
-            <tr key={stock.T} className="hover:bg-gray-100">
-              <td className="px-6 py-4 whitespace-nowrap">
-                <div className="text-sm font-medium text-gray-900">
-                  {stock.T}
-                </div>
-              </td>
-              <td className="px-6 py-4 whitespace-nowrap">
-                <div className="text-sm font-medium text-gray-900">
-                  {stock.n}
-                </div>
-              </td>
-              <td className="px-6 py-4 whitespace-nowrap">
-                <div className="text-sm text-gray-500">{stock.o}</div>
-              </td>
-              <td className="px-6 py-4 whitespace-nowrap">
-                <div className="text-sm text-gray-500">{stock.c}</div>
-              </td>
-            </tr>
-          ))}
+        <tbody>
+          {filteredAggs.slice(0, 20).map((agg) => {
+            const ticker = tickers.find(
+              (ticker) => ticker.ticker === agg.T
+            );
+            return (
+              <tr key={agg.T}>
+                <td className="border px-4 py-2"><a href={`https://finance.yahoo.com/quote/${agg.T}`} target="_blank" rel="noopener noreferrer">{agg.T}</a></td>
+                <td className="border px-4 py-2"><a href={`https://finance.yahoo.com/quote/${agg.T}`} target="_blank" rel="noopener noreferrer">{ticker ? ticker.name : '-'}</a></td>
+                <td className="border px-4 py-2">{agg.o}</td>
+                <td className="border px-4 py-2">{agg.c}</td>
+              </tr>
+            );
+          })}
         </tbody>
       </table>
     </div>
   );
-}
+};
 
-export default StockList;
+export default Table;
