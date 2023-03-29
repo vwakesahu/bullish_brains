@@ -42,6 +42,7 @@ function Signup() {
                     username,
                     email: user.email,
                     uid: user.uid,
+                    
                 });
             })
             .then(() => {
