@@ -78,9 +78,9 @@ const Login = () => {
         >
           <p className="text-gray-600">
             Don't have an account?{' '}
-            <Link to="sign-up" className="text-blue-500 hover:text-blue-600 font-bold">
+            <a href="http://localhost:3000/sign-up" className="text-blue-500 hover:text-blue-600 font-bold">
               Sign up
-              </Link> 
+              </a> 
           </p>
         </motion.div>
       </div>

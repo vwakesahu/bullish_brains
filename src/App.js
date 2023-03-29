@@ -11,6 +11,7 @@ import Demo from './components/Demo';
 import Footer from './components/Footer';
 import Login from './components/LoginContainer';
 import Signup from './components/Signup';
+import StockList from './components/StockList';
 
 
 
@@ -31,6 +32,8 @@ const App = () => {
             <Route path="/demo" element={<Demo />} />
             <Route path="/login" element={<Login />} />
             <Route path="/sign-up" element={<Signup />} />
+            <Route path="/stock-list" element={<StockList />} />
+
 
 
 
