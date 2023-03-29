@@ -163,6 +163,7 @@ const Header = () => {
           </div>
 
           <div className="relative">
+          <Link to={user ? null : "sign-up"} className='flex items-center gap-2'>
             <motion.img
               whileTap={{ scale: 0.6 }}
               src={user ? user.photoURL : Avatar}
@@ -170,6 +171,12 @@ const Header = () => {
               alt="userprofile"
               onClick={login}
             />
+            </Link>
+            
+
+
+
+
             {isMenu && (
               <motion.div
                 initial={{ opacity: 0, scale: 0.6 }}
@@ -177,6 +184,7 @@ const Header = () => {
                 exit={{ opacity: 0, scale: 0.6 }}
                 className="w-40 bg-gray-50 shadow-xl rounded-lg flex flex-col absolute top-12 right-0"
               >
+                
 
                 {
                   user && (
