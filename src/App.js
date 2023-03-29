@@ -12,6 +12,7 @@ import Footer from './components/Footer';
 import Login from './components/LoginContainer';
 import Signup from './components/Signup';
 import StockList from './components/StockList';
+import WalletContainer from './components/Wallet';
 
 
 
@@ -33,6 +34,8 @@ const App = () => {
             <Route path="/login" element={<Login />} />
             <Route path="/sign-up" element={<Signup />} />
             <Route path="/stock-list" element={<StockList />} />
+            <Route path="/wallet" element={<WalletContainer />} />
+
 
 
 

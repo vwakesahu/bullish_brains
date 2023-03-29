@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import firebase from "firebase/compat/app";
 import "firebase/compat/auth";
 import "firebase/compat/firestore";
+import { motion } from "framer-motion";
 
 const firebaseConfig = {
     // Your Firebase project's configuration object
@@ -42,7 +43,7 @@ function Signup() {
                     username,
                     email: user.email,
                     uid: user.uid,
-                    
+                    wallet: 1000000
                 });
             })
             .then(() => {
@@ -55,6 +56,14 @@ function Signup() {
 
     return (
         <div className="bg-white rounded-lg shadow-lg p-6 max-w-sm mx-auto">
+            <motion.h2
+          initial={{ y: -50, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ delay: 0.1 }}
+          className="text-3xl font-bold text-gray-900 mb-8 text-center"
+        >
+          Create Account
+        </motion.h2>
 
             <form onSubmit={handleSubmit} className="w-full max-w-sm mx-auto">
                 <div >
@@ -113,7 +122,7 @@ function Signup() {
                     />
                 </div>
                 <div className="flex items-center justify-between">
-                    <button type="submit" className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+                    <button type="submit" className=" w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
                         Sign Up
                     </button>
                 </div>
