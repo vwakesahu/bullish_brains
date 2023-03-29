@@ -1,7 +1,8 @@
 import { getAuth, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { motion } from "framer-motion";
-import React, { useState } from 'react';
+// import React, { useState } from 'react';
 import { FiMenu } from 'react-icons/fi';
+import firebase from "firebase/compat/app";
 import { TbLogout } from 'react-icons/tb';
 import { Link } from 'react-router-dom';
 import { actionType } from '../context/reducer';
@@ -12,7 +13,20 @@ import Logo from '../img/logo.png';
 import { FaSearch } from "react-icons/fa";
 import { TfiDashboard } from 'react-icons/tfi'
 import WalletContainer from "./Wallet";
+import React, { useEffect, useState } from "react";
 
+const firebaseConfig = {
+  // Your Firebase project's configuration object
+  // ...
+
+  apiKey: "AIzaSyBlc8dyS0gFupsNBibnVQYYWd2pIvShbYc",
+  authDomain: "bullishbrains-86d8d.firebaseapp.com",
+  databaseURL: "https://bullishbrains-86d8d-default-rtdb.firebaseio.com",
+  projectId: "bullishbrains-86d8d",
+  storageBucket: "bullishbrains-86d8d.appspot.com",
+  messagingSenderId: "1016988951904",
+  appId: "1:1016988951904:web:d8e6632d2361ef4bee2a05"
+};
 
 
 const Header = () => {
@@ -20,6 +34,12 @@ const Header = () => {
   const provider = new GoogleAuthProvider();
   const [isMenu, setIsMenu] = useState(false);
   const [{ user }, dispatch] = useStateValue();
+
+  useEffect(() => {
+    if (!firebase.apps.length) {
+        firebase.initializeApp(firebaseConfig);
+    }
+  }, [firebaseConfig]);
 
   const login = async () => {
     if (!user) {
@@ -31,8 +51,27 @@ const Header = () => {
         user: providerData[0],
       });
 
-      
+      if(true){
+
+        // const user = userCredential.user;
+        await firebase.firestore().collection("users").add({
+            'firstname':providerData['0']['displayName'],
+            'lastname':"",
+            'username':"",
+            'email': providerData['0']['email'],
+            uid:providerData['0']['uid'],
+            wallet: 1000000
+        })
+    .then(() => {
+        console.log("User data stored in Firestore.");
+    })
+    .catch((error) => {
+        console.error("Error creating user: ", error);
+    });
+  }
+
       localStorage.setItem("user", JSON.stringify(providerData[0]));
+      console.log(providerData);
     } else {
       setIsMenu(!isMenu);
     }
