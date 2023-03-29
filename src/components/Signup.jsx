@@ -24,11 +24,13 @@ function Signup() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
+
     useEffect(() => {
         if (!firebase.apps.length) {
             firebase.initializeApp(firebaseConfig);
         }
-    }, [firebaseConfig]);
+      }, [firebaseConfig]);
+    
 
     const handleSubmit = (e) => {
         e.preventDefault();
