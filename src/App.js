@@ -11,8 +11,9 @@ import Demo from './components/Demo';
 import Footer from './components/Footer';
 import Login from './components/LoginContainer';
 import Signup from './components/Signup';
-import StockList from './components/StockList';
 import WalletContainer from './components/Wallet';
+import Chart from './components/Chart';
+import { Table } from './components/StockList';
 
 
 
@@ -33,7 +34,9 @@ const App = () => {
             <Route path="/demo" element={<Demo />} />
             <Route path="/login" element={<Login />} />
             <Route path="/sign-up" element={<Signup />} />
-            <Route path="/stock-list" element={<StockList />} />
+            <Route path="/stock-list" element={<Table />}>
+              <Route path="chart" element={<Table><Chart/></Table>}/>
+            </Route>
             <Route path="/wallet" element={<WalletContainer />} />
 
 
