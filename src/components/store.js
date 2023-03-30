@@ -1,6 +1,45 @@
-import { configureStore  } from 'redux';
-import rootReducer from './reducers';
+import React, { createContext, useContext, useReducer } from "react";
+import { fetchUser } from "../utils/fetchLocalStorageData";
 
-const store = configureStore (rootReducer);
+const userInfo = fetchUser();
 
-export default store;
+export const StateContext = createContext();
+
+export const actionType = {
+    SET_USER : 'SET_USER',
+
+}
+
+export const initialState = {
+    user : userInfo,
+
+    
+};
+
+
+
+export const reducer = (state, action) => {
+  // your reducer function here
+  //console.log(action);
+
+  switch(action.type){
+    case actionType.SET_USER: 
+            return {
+                ...state,
+                user : action.user,
+            };
+
+    default :
+    return state;
+}
+};
+
+export const StateProvider = ({ reducer, initialState, children }) => (
+    <StateContext.Provider value={useReducer(reducer, initialState)}>
+        {children}
+    </StateContext.Provider>
+);
+
+export const useStateValue = () => useContext(StateContext);
+
+export const DispatchContext = createContext();

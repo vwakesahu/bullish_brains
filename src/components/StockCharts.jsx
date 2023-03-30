@@ -32,7 +32,7 @@ const Charts = () => {
       const result = await axios.get(
         apiurl
       );
-      // setData(result.data['Time Series (Daily)']);
+      setData(result.data['Time Series (Daily)']);
       setPdate(parseFloat(result.data['Time Series (Daily)'][Object.keys(result.data['Time Series (Daily)'])[0]]['4. close']));
       console.log(pdate);
     };
@@ -158,7 +158,7 @@ const Charts = () => {
         <Box className="flex flex-col items-center justify-center" borderRadius="md" boxShadow="md" p={4} w="90%">
           <Box className="flex-col justify-between w-full mt-4">
             <Text className='text-headingColor text-3xl font-bold relative' fontSize="lg" fontWeight="bold" color="#333" mb={2}>
-              Current Price: <span className='text-red-600'>$  {pdate}</span>
+              Current Price: <span className='text-red-600'> ${pdate}</span>
 
             </Text>
           </Box>

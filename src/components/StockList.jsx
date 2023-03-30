@@ -67,7 +67,7 @@ const Table = () => {
           </tr>
         </thead>
         <tbody>
-          {filteredAggs.slice(0, 20).map((agg) => {
+          {filteredAggs.map((agg) => {
             const ticker = tickers.find(
               (ticker) => ticker.ticker === agg.T
             );
@@ -91,7 +91,7 @@ const Table = () => {
                 <td className="px-2 py-2 border-b border-gray-200">{ticker.name}</td>
                 <td className="px-2 py-2 border-b border-gray-200">{agg.o}</td>
                 <td className="px-2 py-2 border-b border-gray-200 flex">{
-                  agg.c > agg.o && (
+                  agg.c >= agg.o && (
 
                     
                       <AiOutlineArrowUp className='text-green-600' />

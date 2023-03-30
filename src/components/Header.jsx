@@ -1,19 +1,19 @@
 import { getAuth, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { motion } from "framer-motion";
 // import React, { useState } from 'react';
-import { FiMenu } from 'react-icons/fi';
 import firebase from "firebase/compat/app";
+import React, { useEffect, useState } from "react";
+import { FaSearch } from "react-icons/fa";
+import { FiMenu } from 'react-icons/fi';
 import { TbLogout } from 'react-icons/tb';
+import { TfiDashboard } from 'react-icons/tfi';
 import { Link } from 'react-router-dom';
 import { actionType } from '../context/reducer';
 import { useStateValue } from '../context/StateProvider';
 import { app } from '../firebase.config';
 import Avatar from '../img/avatar.png';
 import Logo from '../img/logo.png';
-import { FaSearch } from "react-icons/fa";
-import { TfiDashboard } from 'react-icons/tfi'
 import WalletContainer from "./WalletContainer";
-import React, { useEffect, useState } from "react";
 
 const firebaseConfig = {
   // Your Firebase project's configuration object
@@ -37,45 +37,45 @@ const Header = () => {
 
   useEffect(() => {
     if (!firebase.apps.length) {
-        firebase.initializeApp(firebaseConfig);
+      firebase.initializeApp(firebaseConfig);
     }
   }, [firebaseConfig]);
 
-  const login = async () => {
-    if (!user) {
-      const {
-        user: { providerData },
-      } = await signInWithPopup(firebaseAuth, provider);
-      dispatch({
-        type: actionType.SET_USER,
-        user: providerData[0],
-      });
+  // const login = async () => {
+  //   if (!user) {
+  //     const {
+  //       user: { providerData },
+  //     } = await signInWithPopup(firebaseAuth, provider);
+  //     dispatch({
+  //       type: actionType.SET_USER,
+  //       user: providerData[0],
+  //     });
 
-      if(true){
+  //     if (true) {
 
-        // const user = userCredential.user;
-        await firebase.firestore().collection("users").add({
-            'firstname':providerData['0']['displayName'],
-            'lastname':"",
-            'username':"",
-            'email': providerData['0']['email'],
-            uid:providerData['0']['uid'],
-            wallet: 1000000
-        })
-    .then(() => {
-        console.log("User data stored in Firestore.");
-    })
-    .catch((error) => {
-        console.error("Error creating user: ", error);
-    });
-  }
+  //       // const user = userCredential.user;
+  //       await firebase.firestore().collection("users").add({
+  //         'firstname': providerData['0']['displayName'],
+  //         'lastname': "",
+  //         'username': "",
+  //         'email': providerData['0']['email'],
+  //         uid: providerData['0']['uid'],
+  //         wallet: 1000000
+  //       })
+  //         .then(() => {
+  //           console.log("User data stored in Firestore.");
+  //         })
+  //         .catch((error) => {
+  //           console.error("Error creating user: ", error);
+  //         });
+  //     }
 
-      localStorage.setItem("user", JSON.stringify(providerData[0]));
-      console.log(providerData);
-    } else {
-      setIsMenu(!isMenu);
-    }
-  };
+  //     localStorage.setItem("user", JSON.stringify(providerData[0]));
+  //     console.log(providerData);
+  //   } else {
+  //     setIsMenu(!isMenu);
+  //   }
+  // };
 
   const logout = () => {
     setIsMenu(false);
@@ -125,7 +125,7 @@ const Header = () => {
 
 
 
-            <form className="flex items-center justify-center mt-4">
+            {/* <form className="flex items-center justify-center mt-4">
               <div className="relative mr-4">
                 <input
                   className="bg-gray-100 rounded-full py-2 pl-10 block w-full xl:w-45 focus:outline-none focus:bg-white focus:border-gray-300"
@@ -142,17 +142,26 @@ const Header = () => {
               >
                 <FaSearch />
               </button>
-            </form>
+            </form> */}
 
 
 
             <Link to={"news"} className='flex items-center gap-2'>
 
-            <li className='text-base text-textColor hover:text-headingColor duration-100 transition-all ease-in-out cursor-pointer'>News</li>
+              <li className='text-base text-textColor hover:text-headingColor duration-100 transition-all ease-in-out cursor-pointer'>News</li>
             </Link>
             <Link to={"about-us"} className='flex items-center gap-2'>
               <li className='text-base text-textColor hover:text-headingColor duration-100 transition-all ease-in-out cursor-pointer'>About Us</li>
             </Link>
+            <Link to={"stock-list"} className='flex items-center gap-2'>
+              <li className='text-base text-textColor hover:text-headingColor duration-100 transition-all ease-in-out cursor-pointer'>Stock List</li>
+            </Link>
+            {user && (<button
+              className="bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-4 rounded"
+              onClick={logout}
+            >
+              Logout
+            </button>)}
 
           </motion.ul>
 
@@ -163,16 +172,15 @@ const Header = () => {
           </div>
 
           <div className="relative">
-          <Link to={user ? null : "sign-up"} className='flex items-center gap-2'>
-            <motion.img
-              whileTap={{ scale: 0.6 }}
-              src={user ? user.photoURL : Avatar}
-              className="w-10 min-w-[40px] h-10 min-h-[40px] drop-shadow-xl cursor-pointer rounded-full"
-              alt="userprofile"
-              onClick={login}
-            />
+            <Link to={user ? null : "sign-up"} className='flex items-center gap-2'>
+              <motion.img
+                whileTap={{ scale: 0.6 }}
+                src={user ? user.photoURL : Avatar}
+                className="w-10 min-w-[40px] h-10 min-h-[40px] drop-shadow-xl cursor-pointer rounded-full"
+                alt="userprofile"
+              />
             </Link>
-            
+
 
 
 
@@ -184,19 +192,19 @@ const Header = () => {
                 exit={{ opacity: 0, scale: 0.6 }}
                 className="w-40 bg-gray-50 shadow-xl rounded-lg flex flex-col absolute top-12 right-0"
               >
-                
+
 
                 {
                   user && (
 
                     <div>
-                    <Link to={"dash"} className='flex items-center gap-2'>
-                      <p className='px-4 py-2 flex items-center gap-3 cursor-pointer hover:bg-slate-200 transition-all duration-100 ease-in-out text-textColor text-base'
+                      <Link to={"dash"} className='flex items-center gap-2'>
+                        <p className='px-4 py-2 flex items-center gap-3 cursor-pointer hover:bg-slate-200 transition-all duration-100 ease-in-out text-textColor text-base'
 
-                        
-                      ><TfiDashboard />Dashboard</p>
-                    </Link>
-                    <WalletContainer />
+
+                        ><TfiDashboard />Dashboard</p>
+                      </Link>
+                      <WalletContainer />
                     </div>
 
                   )

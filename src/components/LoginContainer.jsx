@@ -1,13 +1,19 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { motion } from 'framer-motion';
 import { FiMail, FiLock } from 'react-icons/fi';
-import { Link  } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import { StateContext, DispatchContext } from './store';
+import { actionType } from './store';
+
 
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+
+  const state = useContext(StateContext);
+  const dispatch = useContext(DispatchContext);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -16,6 +22,7 @@ const Login = () => {
       .then((userCredential) => {
         const user = userCredential.user;
         console.log("completed");
+        dispatch({ type: actionType.SET_USER, user: user }); // dispatch SET_USER action with user data
         window.location.href = "/dash"; // redirect to dashboard page
       })
       .catch((error) => {
@@ -23,10 +30,6 @@ const Login = () => {
         const errorMessage = error.message;
         console.log(errorMessage, errorCode);
       });
-
-      
-
-
   };
 
   return (
