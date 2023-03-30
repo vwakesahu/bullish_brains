@@ -8,14 +8,19 @@ import Chart from 'chart.js/auto';
 import 'chartjs-adapter-date-fns';
 import { Box, Text } from '@chakra-ui/react';
 import Loader from './Loader'
+import { Wall } from './Wallet-provider';
 
 const Charts = () => {
   const {stockName , setStockName , cname, setCname}= Authprovider();
-  const tickerName = Authprovider()
+  const {balance,setBalance, stocks,setStocks, bonds,setBonds, mfund,setMfund, crypto,setCrypto}=Wall();
+  const tickerName = Authprovider();
     console.log(stockName);   
     console.log(tickerName);
      
   const [data, setData] = useState(null);
+  const [pdate,setPdate]=useState(null);
+
+  let stockprice;
 
   useEffect(() => {
     const fetchData = async () => {
@@ -28,6 +33,7 @@ const Charts = () => {
         apiurl
       );
       setData(result.data['Time Series (Daily)']);
+      setPdate(result.data['Meta Data']['3. Last Refreshed']);
     };
     fetchData();
   }, []);
@@ -118,9 +124,21 @@ const Charts = () => {
     },
   };
 
+  const buyClick = () =>{
+    if(stockprice>balance)
+    {
+      //not able to purchase
+    }
+    else{
+      setBalance(balance-stockprice);
+      //stock evaluation++
+    }
+  }
 
-
-
+  const sellClick = () =>{
+    setBalance(balance+stockprice);
+    //stock evaluation--
+  }
   return (
     <div className="flex space-y-4">
       
@@ -135,8 +153,15 @@ const Charts = () => {
         {cname} 
         <button
       className='bg-red-100'
+      onClick={buyClick}
     >
       BUY
+    </button>
+    <button
+      className='bg-green-100'
+      onClick={sellClick}
+    >
+      SELL
     </button>
         <Line data={chartData} options={options} className="w-1/2 md:w-1/2 " />
       </div>
