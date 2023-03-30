@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Authprovider } from './Stock-list provider';
 import { useNavigate } from 'react-router-dom';
+import { AiOutlineArrowDown, AiOutlineArrowUp } from 'react-icons/ai';
+import { react } from 'plotly.js-dist-min';
 
 const Table = () => {
 
@@ -61,6 +63,7 @@ const Table = () => {
             <th className="px-2 py-2 text-left text-gray-600 uppercase">Name</th>
             <th className="px-2 py-2 text-left text-gray-600 uppercase">Open</th>
             <th className="px-2 py-2 text-left text-gray-600 uppercase">Close</th>
+
           </tr>
         </thead>
         <tbody>
@@ -86,7 +89,25 @@ const Table = () => {
                 </td>
                 <td className="px-2 py-2 border-b border-gray-200">{ticker.name}</td>
                 <td className="px-2 py-2 border-b border-gray-200">{agg.o}</td>
-                <td className="px-2 py-2 border-b border-gray-200">{agg.c}</td>
+                <td className="px-2 py-2 border-b border-gray-200 flex">{
+                  agg.c > agg.o && (
+
+                    
+                      <AiOutlineArrowUp className='text-green-600' />
+                   
+
+                  )}{
+
+                  agg.c < agg.o && (
+
+                    
+                      <AiOutlineArrowDown className='text-red-600'/>
+                    
+
+                  )
+
+                }&nbsp;&nbsp;&nbsp;{agg.c}</td> 
+                <td className="px-2 py-2 border-b border-gray-200"></td> 
               </tr>
             );
           })}

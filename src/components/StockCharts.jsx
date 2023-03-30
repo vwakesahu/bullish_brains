@@ -34,7 +34,7 @@ const Charts = () => {
     labels: data ? Object.keys(data).sort() : [],
     datasets: [
       {
-        label: `${stockName} Stock Price`,
+        label: `${stockName} Stock`,
         data: data
           ? Object.keys(data)
             .sort()
@@ -68,7 +68,7 @@ const Charts = () => {
       },
       title: {
         display: true,
-        text: `${stockName} Stock Price`,
+        text: `${stockName} Stock`,
         font: {
           size: 24,
           weight: 'bold',
@@ -133,13 +133,13 @@ const Charts = () => {
 
 
   return (
-    <div className="flex flex-col items-center justify-center space-y-4 h-screen">
+    <div className="flex flex-col justify-center space-y-4 h-screen">
       {!data ? (
         <div className="flex items-center justify-center h-full">
           <Loader />
         </div>
       ) : (
-        <Box className=" flex-col items-center justify-center" borderRadius="md" boxShadow="md" p={4} w="45%">
+        <Box className=" flex-col items-center justify-center" borderRadius="md" boxShadow="md" p={4} w="75%">
         
         
         <Line data={chartData} options={options} className="w-full" />
