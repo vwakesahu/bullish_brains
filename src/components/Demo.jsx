@@ -1,40 +1,28 @@
-import React from 'react'
-import { Authprovider } from './Stock-list provider';
-import { Box, Text, Button } from '@chakra-ui/react';
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useContext } from 'react';
 import axios from 'axios';
 import { Line } from 'react-chartjs-2';
+import Chart from 'chart.js/auto';
 import 'chartjs-adapter-date-fns';
+import { Box, Text, Button } from '@chakra-ui/react';
 import Loader from './Loader'
-import { Wall } from './Wallet-provider';
+const Demo = () => {
 
-const Charts = () => {
+  
+  let stockname='AAPL'
 
-
-  const { stockName, setStockName, cname, setCname } = Authprovider();
-  const { balance, setBalance, stocks, setStocks, bonds, setBonds, mfund, setMfund, crypto, setCrypto } = Wall();
-  const tickerName = Authprovider();
+  
   const [data, setData] = useState(null);
-  const [pdate, setPdate] = useState(null);
-
-  let stockprice;
-
-  console.log(stockName);
-  console.log(tickerName);
 
   useEffect(() => {
     const fetchData = async () => {
-      const apikey = 'YYGFPGKNWVMLOYMK'
-
-      // let apiurl=`https://www.alphavantage.co/query?function=TIME_SERIES_DAILY_ADJUSTED&symbol=${stockName}&outputsize=full&apikey=${apikey}`
-      let apiurl = `https://www.alphavantage.co/query?function=TIME_SERIES_DAILY_ADJUSTED&symbol=${stockName}&outputsize=full&apikey=${apikey}`
-
+      const apikey='YYGFPGKNWVMLOYMK'
+      
+      let apiurl=`https://www.alphavantage.co/query?function=TIME_SERIES_DAILY_ADJUSTED&symbol=${stockname}&outputsize=full&apikey=${apikey}`
       const result = await axios.get(
         apiurl
       );
-      // setData(result.data['Time Series (Daily)']);
-      setPdate(parseFloat(result.data['Time Series (Daily)'][Object.keys(result.data['Time Series (Daily)'])[0]]['4. close']));
-      console.log(pdate);
+      setData(result.data['Time Series (Daily)']);
     };
     fetchData();
   }, []);
@@ -43,7 +31,7 @@ const Charts = () => {
     labels: data ? Object.keys(data).sort() : [],
     datasets: [
       {
-        label: `${stockName} Stock Price`,
+        label: 'Reliance Stock Price',
         data: data
           ? Object.keys(data)
             .sort()
@@ -77,7 +65,7 @@ const Charts = () => {
       },
       title: {
         display: true,
-        text: `${cname}`,
+        text: 'Reliance Industries Ltd. (RELIANCE.BSE)',
         font: {
           size: 24,
           weight: 'bold',
@@ -137,34 +125,17 @@ const Charts = () => {
       },
     },
   };
+  
 
-  const buyClick = () => {
-    if (stockprice > balance) {
-      //not able to purchase
-    }
-    else {
-      setBalance(balance - stockprice);
-      //stock evaluation++
-    }
-  }
 
-  const sellClick = () => {
-    setBalance(balance + stockprice);
-    //stock evaluation--
-  }
+
   return (
-    <div className="grid grid-cols-12 items-center justify-center mb-64 mt-6">
+    <div className="grid grid-cols-12 h-screen">
       <div className="col-span-3 flex items-center justify-center">
         <Box className="flex flex-col items-center justify-center" borderRadius="md" boxShadow="md" p={4} w="90%">
-          <Box className="flex-col justify-between w-full mt-4">
-            <Text className='text-headingColor text-3xl font-bold relative' fontSize="lg" fontWeight="bold" color="#333" mb={2}>
-              Current Price: <span className='text-red-600'>$  {pdate}</span>
-
-            </Text>
-          </Box>
-
-          <Box className="flex-col justify-between w-full mt-4">
-            <Box className="w-full p-4 bg-green-500 rounded-md shadow-md">
+          
+          <Box className="flex-col justify-between w-full">
+            <Box className="ml-11 w-1/2 p-4 bg-green-500 rounded-md shadow-md">
               <Text fontSize="lg" fontWeight="bold" color="#333" mb={2}>
                 Buy
               </Text>
@@ -172,11 +143,11 @@ const Charts = () => {
                 Buy Now
               </Button>
             </Box>
-            <Box className="w-full p-4 bg-red-500 rounded-md shadow-md mt-4">
+            <Box className="ml-11 w-1/2 p-4 bg-red-500 rounded-md shadow-md mt-5">
               <Text fontSize="lg" fontWeight="bold" color="#333" mb={2}>
                 Sell
               </Text>
-              <Button colorScheme="red" size="sm" fontSize="lg" fontWeight="bold" color="#fff">
+              <Button  colorScheme="red" size="sm" fontSize="lg" fontWeight="bold" color="#fff">
                 Sell Now
               </Button>
             </Box>
@@ -189,17 +160,18 @@ const Charts = () => {
             <Loader />
           </div>
         ) : (
-          <div className="flex flex-col items-center justify-center ml-8 rounded-md shadow-md p-4 w-full">
+          <Box className="flex flex-col items-center justify-center mr10" borderRadius="md" boxShadow="md" p={4} w="100%">
+            
+           
             <Line data={chartData} options={options} className="w-full" />
-          </div>
-
+          </Box>
         )}
       </div>
     </div>
-  );
-
+  )
+  
+  
+  
 }
 
-export default Charts;
-
-
+export default Demo

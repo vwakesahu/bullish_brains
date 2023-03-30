@@ -4,7 +4,7 @@ import axios from 'axios';
 import { Line } from 'react-chartjs-2';
 import Chart from 'chart.js/auto';
 import 'chartjs-adapter-date-fns';
-import { Box, Text } from '@chakra-ui/react';
+import { Box, Text, Button } from '@chakra-ui/react';
 import Loader from './Loader'
 const MainContainer = () => {
 
@@ -125,29 +125,53 @@ const MainContainer = () => {
       },
     },
   };
-
+  
 
 
 
   return (
-    <div className="flex flex-col items-center justify-center space-y-4 h-screen">
-      {!data ? (
-        <div className="flex items-center justify-center h-full">
-          <Loader />
-        </div>
-      ) : (
+    <div className="grid grid-cols-12 h-screen">
+      <div className="col-span-3 flex items-center justify-center">
         <Box className="flex flex-col items-center justify-center" borderRadius="md" boxShadow="md" p={4} w="90%">
-        <Text fontSize="2xl" fontWeight="bold" color="#333" textAlign="center" mb={4}>
-          Reliance Stock Price Chart
-        </Text>
-        <Text fontSize="sm" color="#333" textAlign="center">
-          The chart displays the daily open price of Reliance Industries Ltd. {stockname} from the last 18 years.
-        </Text>
-        <Line data={chartData} options={options} className="w-full" />
-      </Box>
-      )}
+          
+          <Box className="flex-col justify-between w-full">
+            <Box className="ml-11 w-1/2 p-4 bg-green-500 rounded-md shadow-md">
+              <Text fontSize="lg" fontWeight="bold" color="#333" mb={2}>
+                Buy
+              </Text>
+              <Button colorScheme="red" size="sm" fontSize="lg" fontWeight="bold" color="#fff" mb={2}>
+                Buy Now
+              </Button>
+            </Box>
+            <Box className="ml-11 w-1/2 p-4 bg-red-500 rounded-md shadow-md mt-5">
+              <Text fontSize="lg" fontWeight="bold" color="#333" mb={2}>
+                Sell
+              </Text>
+              <Button  colorScheme="red" size="sm" fontSize="lg" fontWeight="bold" color="#fff">
+                Sell Now
+              </Button>
+            </Box>
+          </Box>
+        </Box>
+      </div>
+      <div className="col-span-8 flex items-center justify-center">
+        {!data ? (
+          <div className="flex items-center justify-center h-full">
+            <Loader />
+          </div>
+        ) : (
+          <Box className="flex flex-col items-center justify-center mr10" borderRadius="md" boxShadow="md" p={4} w="100%">
+            
+           
+            <Line data={chartData} options={options} className="w-full" />
+          </Box>
+        )}
+      </div>
     </div>
   )
+  
+  
+  
 }
 
 export default MainContainer

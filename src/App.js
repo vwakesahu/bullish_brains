@@ -12,8 +12,10 @@ import Login from './components/LoginContainer';
 import Signup from './components/Signup';
 import WalletContainer from './components/WalletContainer';
 import Chart from './components/StockCharts';
-import Table  from './components/StockList';
+import Table from './components/StockList';
 import { Authstock } from './components/Stock-list provider';
+import { Wallprovider } from './components/Wallet-provider';
+import Demo from './components/Demo';
 
 
 
@@ -26,19 +28,27 @@ const App = () => {
 
         <main className="mt-24 p-8 w-full">
           <Authstock>
-            <Routes>
-              <Route path="/*" element={<MainContainer />} />
-              <Route path="/createItem" element={<CreateContainer />} />
-              <Route path="/about-us" element={<AboutUs />} />
-              <Route path="/dash" element={<DoughnutChart />} />
-              <Route path="/news" element={<StocksNews />} />
-              <Route path="/login" element={<Login />} />
-              <Route path="/sign-up" element={<Signup />} />
-              <Route path="/stock-list" element={<Table />}/>
-              <Route path="/chart" element={<Chart/>}/>
-              <Route path="/wallet" element={<WalletContainer />} />
-            </Routes>
+
+
+            <Wallprovider>
+              <Routes>
+                <Route path="/*" element={<MainContainer />} />
+                <Route path="/createItem" element={<CreateContainer />} />
+                <Route path="/about-us" element={<AboutUs />} />
+                <Route path="/dash" element={<DoughnutChart />} />
+                <Route path="/news" element={<StocksNews />} />
+                <Route path="/login" element={<Login />} />
+                <Route path="/sign-up" element={<Signup />} />
+                <Route path="/stock-list" element={<Table />} />
+                <Route path="/chart" element={<Chart />} />
+                <Route path="/wallet" element={<WalletContainer />} />
+                <Route path="/demo" element={<Demo />} />
+
+              </Routes>
+            </Wallprovider>
           </Authstock>
+
+
         </main>
         <Footer />
       </div>

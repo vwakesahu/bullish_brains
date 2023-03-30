@@ -3,7 +3,6 @@ import axios from 'axios';
 import { Authprovider } from './Stock-list provider';
 import { useNavigate } from 'react-router-dom';
 import { AiOutlineArrowDown, AiOutlineArrowUp } from 'react-icons/ai';
-import { react } from 'plotly.js-dist-min';
 
 const Table = () => {
 
@@ -12,6 +11,7 @@ const Table = () => {
   const [tickers, setTickers] = useState([]);
   const [aggs, setAggs] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
+  
 
   useEffect(() => {
 
