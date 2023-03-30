@@ -144,19 +144,20 @@ const Charts = () => {
 
   const buyClick = async () => {
       setBalance(balance - stockprice);
-      const own = firebase.firestore().collection('users').doc(firebase.auth().currentUser.uid);
-      if(own.get()['wallet']!=1000000){
-        await own.collection('stocks').doc().collection(stockName).doc().update({
+      const own = firebase.firestore().collection(stocks).doc(firebase.auth().currentUser.uid).collection(stockName);
+      if(firebase.firestore().collection('users').doc(firebase.auth().currentUser.uid).get['wallet']!=1000000){
+        own.add({
+          'stock_NO':stockNo,
           'stock_prices':stockprice,
-          'stock_no':stockNo,
-        });
+        })
       }
       else{
-        await own.collection('stocks').doc().collection(stockName).add({
+        own.doc().update({
+          'stock_NO':stockNo,
           'stock_prices':stockprice,
-          'stock_no':stockNo,
-        });
+        })
       }
+      
   }
 
   const sellClick = () => {
