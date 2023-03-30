@@ -10,7 +10,7 @@ import { Box, Text } from '@chakra-ui/react';
 import Loader from './Loader'
 
 const Charts = () => {
-  const {stockName , setStockName}= Authprovider();
+  const {stockName , setStockName , cname, setCname}= Authprovider();
   const tickerName = Authprovider()
     console.log(stockName);   
     console.log(tickerName);
