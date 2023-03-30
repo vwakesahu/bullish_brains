@@ -1,6 +1,6 @@
 import React from 'react'
 
-const WalletContainer = () => {
+const DashboardWallet = () => {
   return (
     <div className="bg-white p-6 rounded-lg shadow-lg">
       <div className="flex justify-between items-center mb-4">
@@ -53,4 +53,4 @@ const WalletContainer = () => {
   )
 }
 
-export default WalletContainer
+export default DashboardWallet
