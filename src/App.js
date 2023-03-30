@@ -5,14 +5,14 @@ import CreateContainer from './components/CreateContainer';
 import MainContainer from './components/MainContainer';
 import { AnimatePresence } from "framer-motion";
 import AboutUs from './components/AboutUs';
-import DoughnutChart from './components/DoughnutChart';
+import DoughnutChart from './components/Dashboard';
 import StocksNews from './components/StocksNews';
 import Demo from './components/Demo';
 import Footer from './components/Footer';
 import Login from './components/LoginContainer';
 import Signup from './components/Signup';
-import WalletContainer from './components/Wallet';
-import Chart from './components/Chart';
+import WalletContainer from './components/WalletContainer';
+import Chart from './components/StockCharts';
 import Table  from './components/StockList';
 import { Authstock } from './components/Stock-list provider';
 

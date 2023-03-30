@@ -4,17 +4,14 @@ import { Authprovider } from './Stock-list provider';
 import { useNavigate } from 'react-router-dom';
 
 const Table = () => {
-  
-  const {stockName , setStockName}= Authprovider();
+
+  const { stockName, setStockName } = Authprovider();
   const navigate = useNavigate();
   const [tickers, setTickers] = useState([]);
   const [aggs, setAggs] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
 
   useEffect(() => {
-
-
-
 
 
     const fetchData = async () => {
@@ -44,15 +41,26 @@ const Table = () => {
   });
 
   return (
-    <div>
-      <input type="text" placeholder="Search ticker name" value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} />
-      <table className="table-auto">
+    <div className="w-full max-w-screen-xl mx-auto">
+  <div className="flex flex-col items-center justify-center">
+    <input
+      type="text"
+      placeholder="Search ticker name"
+      value={searchTerm}
+      onChange={(e) => setSearchTerm(e.target.value)}
+      className="w-full md:w-1/2 p-2 rounded-lg shadow-lg"
+    />
+  </div>
+
+  <div className="-mx-2 mt-8">
+    <div className="overflow-x-auto">
+      <table className="table-auto w-full">
         <thead>
           <tr>
-            <th className="px-4 py-2">Ticker</th>
-            <th className="px-4 py-2">Name</th>
-            <th className="px-4 py-2">Open</th>
-            <th className="px-4 py-2">Close</th>
+            <th className="px-2 py-2 text-left text-gray-600 uppercase">Ticker</th>
+            <th className="px-2 py-2 text-left text-gray-600 uppercase">Name</th>
+            <th className="px-2 py-2 text-left text-gray-600 uppercase">Open</th>
+            <th className="px-2 py-2 text-left text-gray-600 uppercase">Close</th>
           </tr>
         </thead>
         <tbody>
@@ -61,22 +69,35 @@ const Table = () => {
               (ticker) => ticker.ticker === agg.T
             );
             return (
-              <tr key={agg.T}>
-                <td className="border px-4 py-2"onClick={() =>{
-                  
-                }}><button type="submit" onClick={() =>{
-                  setStockName(agg.T);
-                  navigate('/chart');
-                  }}>{agg.T}</button></td>
-                <td className="border px-4 py-2"> <a href={`https://finance.yahoo.com/quote/${agg.T}`} target="_blank" rel="noopener noreferrer">{ticker ? ticker.name : '-'}</a></td>
-                <td className="border px-4 py-2">{agg.o}</td>
-                <td className="border px-4 py-2">{agg.c}</td>
+              <tr key={agg.T} className="bg-white">
+                <td className="px-2 py-2 border-b border-gray-200" onClick={() => {
+
+                }}>
+                  <button
+                    type="submit"
+                    onClick={() => {
+                      setStockName(agg.T);
+                      navigate('/chart');
+                    }}
+                    className="text-blue-500 hover:text-blue-700"
+                  >
+                    {agg.T}
+                  </button>
+                </td>
+                <td className="px-2 py-2 border-b border-gray-200">{ticker.name}</td>
+                <td className="px-2 py-2 border-b border-gray-200">{agg.o}</td>
+                <td className="px-2 py-2 border-b border-gray-200">{agg.c}</td>
               </tr>
             );
           })}
         </tbody>
       </table>
     </div>
+  </div>
+</div>
+
+  
+
   );
 };
 

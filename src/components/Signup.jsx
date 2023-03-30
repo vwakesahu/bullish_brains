@@ -12,7 +12,7 @@ import Avatar from '../img/avatar.png';
 import Logo from '../img/logo.png';
 import { FaSearch } from "react-icons/fa";
 import { TfiDashboard } from 'react-icons/tfi'
-import WalletContainer from "./Wallet";
+import WalletContainer from "./WalletContainer";
 import React, { useEffect, useState } from "react";
 import "firebase/compat/auth";
 import "firebase/compat/firestore";

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { FiMail, FiLock } from 'react-icons/fi';
-import { Link } from 'react-router-dom';
+import { Link  } from 'react-router-dom';
 
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 
@@ -12,17 +12,21 @@ const Login = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     const auth = getAuth();
-signInWithEmailAndPassword(auth, email, password)
-  .then((userCredential) => {
-    const user = userCredential.user;
-    console.log("completed");
-  })
-  .catch((error) => {
-    const errorCode = error.code;
-    const errorMessage = error.message;
-    console.log(errorMessage,errorCode);
-  });
-    
+    signInWithEmailAndPassword(auth, email, password)
+      .then((userCredential) => {
+        const user = userCredential.user;
+        console.log("completed");
+        window.location.href = "/dash"; // redirect to dashboard page
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        console.log(errorMessage, errorCode);
+      });
+
+      
+
+
   };
 
   return (
@@ -93,7 +97,7 @@ signInWithEmailAndPassword(auth, email, password)
             Don't have an account?{' '}
             <a href="http://localhost:3000/sign-up" className="text-blue-500 hover:text-blue-600 font-bold">
               Sign up
-              </a> 
+            </a>
           </p>
         </motion.div>
       </div>
