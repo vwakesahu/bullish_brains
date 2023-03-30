@@ -7,6 +7,9 @@ import { Line } from 'react-chartjs-2';
 import 'chartjs-adapter-date-fns';
 import Loader from './Loader'
 import { Wall } from './Wallet-provider';
+import "firebase/compat/auth";
+import "firebase/compat/firestore";
+import firebase from "firebase/compat/app";
 
 const Charts = () => {
 
@@ -16,6 +19,7 @@ const Charts = () => {
   const tickerName = Authprovider();
   const [data, setData] = useState(null);
   const [pdate, setPdate] = useState(null);
+  let stockNo;
 
   let stockprice;
 
@@ -138,19 +142,26 @@ const Charts = () => {
     },
   };
 
-  const buyClick = () => {
-    if (stockprice > balance) {
-      //not able to purchase
-    }
-    else {
+  const buyClick = async () => {
       setBalance(balance - stockprice);
-      //stock evaluation++
-    }
+      const own = firebase.firestore().collection('users').doc(firebase.auth().currentUser.uid);
+      if(own.get()['wallet']!=1000000){
+        await own.collection('stocks').doc().collection(stockName).doc().update({
+          'stock_prices':stockprice,
+          'stock_no':stockNo,
+        });
+      }
+      else{
+        await own.collection('stocks').doc().collection(stockName).add({
+          'stock_prices':stockprice,
+          'stock_no':stockNo,
+        });
+      }
   }
 
   const sellClick = () => {
     setBalance(balance + stockprice);
-    //stock evaluation--
+    
   }
   return (
     <div className="grid grid-cols-12 items-center justify-center mb-64 mt-6">

@@ -16,6 +16,9 @@ import WalletContainer from "./WalletContainer";
 import React, { useEffect, useState } from "react";
 import "firebase/compat/auth";
 import "firebase/compat/firestore";
+import{useNavigate} from 'react-router-dom'
+
+// var browserHistory = ReactRouter.browserHistory;
 
 
 const firebaseConfig = {
@@ -105,6 +108,10 @@ function Signup() {
             .catch((error) => {
                 console.error("Error creating user: ", error);
             });
+
+            localStorage.setItem("user", JSON.stringify(firebase.auth().currentUser));
+            // console.log(providerData);
+            // useNavigate(-1);
     };
 
     return (
