@@ -1,7 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { motion } from 'framer-motion';
 import { FiMail, FiLock } from 'react-icons/fi';
 import { Link } from 'react-router-dom';
+import { StateContext, DispatchContext } from './store';
+import { actionType } from './store';
+
 
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 
@@ -9,20 +12,24 @@ const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
+  const state = useContext(StateContext);
+  const dispatch = useContext(DispatchContext);
+
   const handleSubmit = (e) => {
     e.preventDefault();
     const auth = getAuth();
-signInWithEmailAndPassword(auth, email, password)
-  .then((userCredential) => {
-    const user = userCredential.user;
-    console.log("completed");
-  })
-  .catch((error) => {
-    const errorCode = error.code;
-    const errorMessage = error.message;
-    console.log(errorMessage,errorCode);
-  });
-    
+    signInWithEmailAndPassword(auth, email, password)
+      .then((userCredential) => {
+        const user = userCredential.user;
+        console.log("completed");
+        dispatch({ type: actionType.SET_USER, user: user }); // dispatch SET_USER action with user data
+        window.location.href = "/dash"; // redirect to dashboard page
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        console.log(errorMessage, errorCode);
+      });
   };
 
   return (
@@ -93,7 +100,7 @@ signInWithEmailAndPassword(auth, email, password)
             Don't have an account?{' '}
             <a href="http://localhost:3000/sign-up" className="text-blue-500 hover:text-blue-600 font-bold">
               Sign up
-              </a> 
+            </a>
           </p>
         </motion.div>
       </div>
