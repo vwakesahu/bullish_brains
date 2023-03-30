@@ -122,32 +122,24 @@ const Charts = () => {
 
 
   return (
-    <div className="flex space-y-4">
-      
-  {!data ? (
-    <div className="flex items-center justify-center h-full">
-      <Loader />
+    <div className="flex flex-col items-center justify-center h-screen">
+      {!data ? (
+        <Loader />
+      ) : (
+        <div className="flex flex-col items-end w-full md:w-1/2">
+          
+          <Line data={chartData} options={options} className="w-full" />
+          <div className="flex items-center mb-4">
+            <div className="text-lg px-3 py-2">{cname}</div>
+            <button className="bg-green-500 text-white rounded-lg px-4 py-2 hover:bg-green-600 transition-colors duration-300">
+              BUY
+            </button>
+          </div> 
+        </div>
+      )}
     </div>
-  ) : (
-    <div className='justify-between'>
-      <div className='flex w-screen md:w-1/2'>
-      
-        {cname} 
-        <button
-      className='bg-red-100'
-    >
-      BUY
-    </button>
-        <Line data={chartData} options={options} className="w-1/2 md:w-1/2 " />
-      </div>
-      
-    </div>
-  )}
-
-
-</div>
-
-  )
+  );
+  
 }
 
 export default Charts;
