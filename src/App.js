@@ -7,7 +7,6 @@ import { AnimatePresence } from "framer-motion";
 import AboutUs from './components/AboutUs';
 import DoughnutChart from './components/Dashboard';
 import StocksNews from './components/StocksNews';
-import Demo from './components/Demo';
 import Footer from './components/Footer';
 import Login from './components/LoginContainer';
 import Signup from './components/Signup';
@@ -33,7 +32,6 @@ const App = () => {
               <Route path="/about-us" element={<AboutUs />} />
               <Route path="/dash" element={<DoughnutChart />} />
               <Route path="/news" element={<StocksNews />} />
-              <Route path="/demo" element={<Demo />} />
               <Route path="/login" element={<Login />} />
               <Route path="/sign-up" element={<Signup />} />
               <Route path="/stock-list" element={<Table />}/>

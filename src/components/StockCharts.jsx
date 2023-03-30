@@ -21,7 +21,9 @@ const Charts = () => {
     const fetchData = async () => {
       const apikey='YYGFPGKNWVMLOYMK'
       
+      // let apiurl=`https://www.alphavantage.co/query?function=TIME_SERIES_DAILY_ADJUSTED&symbol=${stockName}&outputsize=full&apikey=${apikey}`
       let apiurl=`https://www.alphavantage.co/query?function=TIME_SERIES_DAILY_ADJUSTED&symbol=${stockName}&outputsize=full&apikey=${apikey}`
+
       const result = await axios.get(
         apiurl
       );
@@ -34,7 +36,7 @@ const Charts = () => {
     labels: data ? Object.keys(data).sort() : [],
     datasets: [
       {
-        label: `${stockName} Stock`,
+        label: `${stockName} Stock Price`,
         data: data
           ? Object.keys(data)
             .sort()
@@ -64,19 +66,6 @@ const Charts = () => {
             size: 16,
           },
           color: '#333',
-        },
-      },
-      title: {
-        display: true,
-        text: `${stockName} Stock`,
-        font: {
-          size: 24,
-          weight: 'bold',
-        },
-        color: '#333',
-        padding: {
-          top: 30,
-          bottom: 10,
         },
       },
       tooltip: {
@@ -133,24 +122,35 @@ const Charts = () => {
 
 
   return (
-    <div className="flex flex-col justify-center space-y-4 h-screen">
-      {!data ? (
-        <div className="flex items-center justify-center h-full">
-          <Loader />
-        </div>
-      ) : (
-        <Box className=" flex-col items-center justify-center" borderRadius="md" boxShadow="md" p={4} w="75%">
-        
-        
-        <Line data={chartData} options={options} className="w-full" />
-      </Box>
-      )}
+    <div className="flex space-y-4">
+      
+  {!data ? (
+    <div className="flex items-center justify-center h-full">
+      <Loader />
     </div>
+  ) : (
+    <div className='justify-between'>
+      <div className='flex w-screen md:w-1/2'>
+      
+        {cname} 
+        <button
+      className='bg-red-100'
+    >
+      BUY
+    </button>
+        <Line data={chartData} options={options} className="w-1/2 md:w-1/2 " />
+      </div>
+      
+    </div>
+  )}
+
+
+</div>
+
   )
 }
 
 export default Charts;
-
 
 
 
