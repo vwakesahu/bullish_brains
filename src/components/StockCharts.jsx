@@ -10,7 +10,7 @@ import { Box, Text } from '@chakra-ui/react';
 import Loader from './Loader'
 
 const Charts = () => {
-  const {stockName , setStockName}= Authprovider();
+  const {stockName , setStockName , cname, setCname}= Authprovider();
   const tickerName = Authprovider()
     console.log(stockName);   
     console.log(tickerName);
@@ -134,6 +134,7 @@ const Charts = () => {
 
   return (
     <div className="flex flex-col items-center justify-center space-y-4 h-screen">
+      {cname}
       {!data ? (
         <div className="flex items-center justify-center h-full">
           <Loader />

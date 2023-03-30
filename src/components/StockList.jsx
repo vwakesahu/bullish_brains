@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 
 const Table = () => {
 
-  const { stockName, setStockName } = Authprovider();
+  const { stockName , setStockName , cname, setCname } = Authprovider();
   const navigate = useNavigate();
   const [tickers, setTickers] = useState([]);
   const [aggs, setAggs] = useState([]);
@@ -77,6 +77,7 @@ const Table = () => {
                     type="submit"
                     onClick={() => {
                       setStockName(agg.T);
+                      setCname(ticker.name);
                       navigate('/chart');
                     }}
                     className="text-blue-500 hover:text-blue-700"
