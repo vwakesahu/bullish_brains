@@ -18,6 +18,8 @@ import { Wallprovider } from './components/Wallet-provider';
 import Demo from './components/Demo';
 import Dashboard from './components/Dashboard';
 import RequiredAuth from './components/RequiredAuth';
+import DemoChart from './components/DemoChart';
+import AcountContainer from './components/AcountContainer';
 
 
 
@@ -35,7 +37,10 @@ const App = () => {
 
            
               <Routes>
-                <Route path="/*" element={<MainContainer />} />
+              <Route path="/account" element={<AcountContainer />} />
+
+                <Route path="/demo-chart" element={<DemoChart />} />
+                <Route path="/*" element={<StocksNews />} />
                 <Route path="/createItem" element={<CreateContainer />} />
                 <Route path="/about-us" element={<AboutUs />} />
                 <Route path="/dash" element={<RequiredAuth><Dashboard /></RequiredAuth>} />

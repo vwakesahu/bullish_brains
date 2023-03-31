@@ -1,15 +1,16 @@
-import React, { useState, useEffect } from 'react';
-import { useContext } from 'react';
 import axios from 'axios';
+import React from 'react'
+import { useEffect } from 'react';
+import { useState } from 'react';
+import Loader from './Loader';
+import { Box } from '@chakra-ui/react';
 import { Line } from 'react-chartjs-2';
-import Chart from 'chart.js/auto';
-import 'chartjs-adapter-date-fns';
-import { Box, Text, Button } from '@chakra-ui/react';
-import Loader from './Loader'
-const MainContainer = () => {
+
+const Demo = () => {
+
 
   
-  let stockname='AAPL'
+  let stockname='NIFTY_50'
 
   
   const [data, setData] = useState(null);
@@ -31,7 +32,7 @@ const MainContainer = () => {
     labels: data ? Object.keys(data).sort() : [],
     datasets: [
       {
-        label: 'Reliance Stock Price',
+        label: 'Apple Inc',
         data: data
           ? Object.keys(data)
             .sort()
@@ -65,9 +66,9 @@ const MainContainer = () => {
       },
       title: {
         display: true,
-        text: 'Reliance Industries Ltd. (RELIANCE.BSE)',
+        text: 'Apple Inc',
         font: {
-          size: 24,
+          size: 25,
           weight: 'bold',
         },
         color: '#333',
@@ -79,11 +80,11 @@ const MainContainer = () => {
       tooltip: {
         displayColors: false,
         titleFont: {
-          size: 16,
+          size: 12,
           weight: 'bold',
         },
         bodyFont: {
-          size: 14,
+          size: 10,
         },
         padding: {
           top: 10,
@@ -130,48 +131,34 @@ const MainContainer = () => {
 
 
   return (
-    <div className="grid grid-cols-12 h-screen">
-      <div className="col-span-3 flex items-center justify-center">
-        <Box className="flex flex-col items-center justify-center" borderRadius="md" boxShadow="md" p={4} w="90%">
-          
-          <Box className="flex-col justify-between w-full">
-            <Box className="ml-11 w-1/2 p-4 bg-green-500 rounded-md shadow-md">
-              <Text fontSize="lg" fontWeight="bold" color="#333" mb={2}>
-                Buy
-              </Text>
-              <Button colorScheme="red" size="sm" fontSize="lg" fontWeight="bold" color="#fff" mb={2}>
-                Buy Now
-              </Button>
-            </Box>
-            <Box className="ml-11 w-1/2 p-4 bg-red-500 rounded-md shadow-md mt-5">
-              <Text fontSize="lg" fontWeight="bold" color="#333" mb={2}>
-                Sell
-              </Text>
-              <Button  colorScheme="red" size="sm" fontSize="lg" fontWeight="bold" color="#fff">
-                Sell Now
-              </Button>
-            </Box>
-          </Box>
-        </Box>
-      </div>
-      <div className="col-span-8 flex items-center justify-center">
-        {!data ? (
+    <div className="relative h-screen gap-2">
+      {/* Top Left Container */}
+      <div className="absolute shadow-lg top-0 left-0 h-1/2 w-1/2 bg-gray-200 flex flex-col items-center justify-center rounded-lg">
+      {!data ? (
           <div className="flex items-center justify-center h-full">
             <Loader />
           </div>
         ) : (
-          <Box className="flex flex-col items-center justify-center mr10" borderRadius="md" boxShadow="md" p={4} w="100%">
+          <Box className="flex flex-col items-center justify-center" borderRadius="md" boxShadow="md" p={4} w="100%">
             
            
             <Line data={chartData} options={options} className="w-full" />
           </Box>
         )}
       </div>
+
+
+      {/* Bottom Left Container */}
+      <div className="py-5 m-2 bottom-0 left-0 h-1/2 w-1/2 bg-gray-200 flex items-center justify-center">
+        <h1 className="text-lg font-bold">Bottom Left Container</h1>
+      </div>
+
+      {/* Bottom Right Container */}
+      <div className="absolute bottom-0 right-0 h-1/4 w-1/4 bg-gray-500 flex items-center justify-center">
+        <h1 className="text-lg font-bold">Bottom Right Container</h1>
+      </div>
     </div>
-  )
-  
-  
-  
+  );
 }
 
-export default MainContainer
+export default Demo
