@@ -12,17 +12,27 @@ const AcountContainer = () => {
     const [username, setUsername] = useState('');
     const [First, setFirst] = useState('');
     const [Last, setLast] = useState('');
-  const getUser = async () => {
-    const user = firebase.auth().currentUser;
-    if (user) {
-      setEmail(user.email);
-      firebase.firestore().collection('users').doc(user.uid).get().then((value)=>{
-        setUsername(value['username']);
-        setFirst(value['firstname']);
-        setLast(value['lastname']);
-      });
-    }
-  };
+    const getUser = async() => {
+      const user = firebase.auth().currentUser;
+      if (user) {
+        setEmail(user.email);
+        const userRef =await firebase.firestore().collection("users").doc(user.uid).get().then((vale)=>{
+          console.log(vale);
+        });
+
+        // userRef.get().then((doc) => {
+        //   // console.log(doc['username']);
+        //   // console.log(doc['firstname']);
+        //   // console.log(doc['lastname']);
+        //   // console.log(doc['email']);
+        //   console.log(doc);
+        // }).catch((error) => {
+        //   console.log('Error getting document:', error);
+        // });
+      }
+    };
+    
+    
 
   useEffect(() => {
     getUser();

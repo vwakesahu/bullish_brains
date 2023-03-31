@@ -14,19 +14,20 @@ import WalletContainer from './components/WalletContainer';
 import Chart from './components/StockCharts';
 import Table from './components/StockList';
 import { Authstock } from './components/Stock-list provider';
-import { Wallprovider } from './components/Wallet-provider';
+
 import Demo from './components/Demo';
 import Dashboard from './components/Dashboard';
 import RequiredAuth from './components/RequiredAuth';
 import DemoChart from './components/DemoChart';
 import AcountContainer from './components/AcountContainer';
+import { WalletProvider } from './components/Wallet-provider';
 
 
 
 const App = () => {
   return (
     <AnimatePresence mode='wait'>
-       <Wallprovider>
+       <WalletProvider>
 
       <div className="w-screen sm:h-full md:h-screen flex flex-col bg-primary">
         <Header />
@@ -59,7 +60,7 @@ const App = () => {
         </main>
         <Footer />
       </div>
-      </Wallprovider>
+      </WalletProvider>
 
     </AnimatePresence>
   );

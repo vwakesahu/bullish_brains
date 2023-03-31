@@ -2,21 +2,23 @@ import React from 'react'
 import { Doughnut } from 'react-chartjs-2';
 import { useRef } from 'react';
 import { Chart, ArcElement } from 'chart.js';
+import { Wall } from './Wallet-provider';
 
 Chart.register(ArcElement);
+// const {balance,setBalance, stocks,setStocks, bonds,setBonds, mfund,setMfund, crypto,setCrypto}= Wall();
 
 const data = {
   labels: ['Stocks', 'Bonds', 'Mutual Funds', 'Crypto'],
   datasets: [
     {
       label: '# of Votes',
-      data: [4, 2, 3, 9],
+      data: [4,6,5, 9],
       backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#000000'],
       borderWidth: 3,
     },
   ],
 };
-
+//console.log(stocks);
 const options = {
   plugins: {
     legend: {
