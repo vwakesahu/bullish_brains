@@ -2,22 +2,39 @@ import React, { useEffect } from 'react'
 import firebase from "firebase/compat/app";
 import "firebase/compat/auth";
 import "firebase/compat/firestore";
+import { useState } from 'react';
 // import { useStateValue } from '../context/StateProvider';
 // import { GoogleAuthProvider } from 'firebase/auth';
 
 const AcountContainer = () => {
-    // const provider = new GoogleAuthProvider();
-//   const [isMenu, setIsMenu] = useState(false);
-//   const [{ user }, dispatch] = useStateValue();
-    
 
-    const getuser =async()=>{
-        
+    const [email, setEmail] = useState('');
+    const [username, setUsername] = useState('');
+    const [First, setFirst] = useState('');
+    const [Last, setLast] = useState('');
+  const getUser = async () => {
+    const user = firebase.auth().currentUser;
+    if (user) {
+      setEmail(user.email);
+      firebase.firestore().collection('users').doc(user.uid).get().then((value)=>{
+        setUsername(value['username']);
+        setFirst(value['firstname']);
+        setLast(value['lastname']);
+      });
     }
+  };
 
-    useEffect(() => {
-        getuser();
-    }, [])
+  useEffect(() => {
+    getUser();
+  }, []);
+
+    // const getuser =async()=>{
+        
+    // }
+
+    // useEffect(() => {
+    //     getuser();
+    // }, [])
 
     // const editm =async()=>{
     //     await firebase.firestore().collection('users').doc(firebase.auth().currentUser.uid).update({
@@ -42,7 +59,7 @@ const AcountContainer = () => {
                   id="username"
                   type="username"
                   placeholder="Username"
-                  defaultValue='test123'
+                  defaultValue={username}
                 />
               </div>
               <div className="mb-4">
@@ -54,7 +71,7 @@ const AcountContainer = () => {
                   id="email"
                   type="email"
                   placeholder="Email"
-                  defaultValue=''
+                  defaultValue={email}
                 />
               </div>
               <div className="mb-4">
@@ -66,7 +83,7 @@ const AcountContainer = () => {
                   id="firstName"
                   type="text"
                   placeholder="First Name"
-                  defaultValue='TEST'
+                  defaultValue={First}
 
                 />
               </div>
@@ -79,7 +96,7 @@ const AcountContainer = () => {
                   id="lastName"
                   type="text"
                   placeholder="Last Name"
-                  defaultValue='123'
+                  defaultValue={Last}
 
                 />
               </div>

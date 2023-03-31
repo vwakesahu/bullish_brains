@@ -8,7 +8,7 @@ import { FiMenu } from 'react-icons/fi';
 import { TbLogout } from 'react-icons/tb';
 import { VscAccount } from 'react-icons/vsc'
 import { TfiDashboard } from 'react-icons/tfi';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { actionType } from '../context/reducer';
 import { useStateValue } from '../context/StateProvider';
 import { app } from '../firebase.config';
@@ -37,6 +37,7 @@ const Header = () => {
   const provider = new GoogleAuthProvider();
   const [isMenu, setIsMenu] = useState(false);
   const [{ user }, dispatch] = useStateValue();
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (!firebase.apps.length) {
@@ -94,6 +95,8 @@ const Header = () => {
       type: actionType.SET_USER,
       user: null,
     });
+    navigate('/sign-up')
+    
   };
 
 

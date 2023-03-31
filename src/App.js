@@ -37,7 +37,7 @@ const App = () => {
 
            
               <Routes>
-              <Route path="/account" element={<AcountContainer />} />
+              <Route path="/account" element={<RequiredAuth><AcountContainer /></RequiredAuth>} />
 
                 <Route path="/demo-chart" element={<DemoChart />} />
                 <Route path="/*" element={<StocksNews />} />
