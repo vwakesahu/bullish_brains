@@ -40,7 +40,7 @@ function Signup() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [{ user }, dispatch] = useStateValue();
-
+    const [islogin,setIslogin]=useState(false);
 
     useEffect(() => {
         if (!firebase.apps.length) {
@@ -99,12 +99,16 @@ function Signup() {
                     wallet: 1000000
                 });
             })
-            .then(() => {
+            .then((_user) => {
+              localStorage.setItem("user", JSON.stringify(_user));
+              setIslogin(!islogin);
                 console.log("User data stored in Firestore.");
             })
             .catch((error) => {
                 console.error("Error creating user: ", error);
             });
+
+            
     };
 
     return (
