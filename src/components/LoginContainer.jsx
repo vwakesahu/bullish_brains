@@ -4,32 +4,32 @@ import { FiMail, FiLock } from 'react-icons/fi';
 import { Link } from 'react-router-dom';
 import { StateContext, DispatchContext } from './store';
 import { actionType } from './store';
+import firebase from "firebase/compat/app";
+import "firebase/compat/auth";
+import "firebase/compat/firestore";
+import { useStateValue } from '../context/StateProvider';
 
 
-import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+// import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [{ user }, dispatch] = useStateValue();
 
   const state = useContext(StateContext);
-  const dispatch = useContext(DispatchContext);
+  // const dispatch = useContext(DispatchContext);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async(e) => {
     e.preventDefault();
-    const auth = getAuth();
-    signInWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
-        const user = userCredential.user;
-        console.log("completed");
-        dispatch({ type: actionType.SET_USER, user: user }); // dispatch SET_USER action with user data
-        window.location.href = "/dash"; // redirect to dashboard page
-      })
-      .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        console.log(errorMessage, errorCode);
-      });
+    let userCredential = await firebase.auth().signInWithEmailAndPassword(email,password);
+    dispatch({
+      type: actionType.SET_USER,
+      user: userCredential.user,
+  });
+  localStorage.setItem("user", JSON.stringify(userCredential.user));
+  console.log(userCredential.user);
+
   };
 
   return (
