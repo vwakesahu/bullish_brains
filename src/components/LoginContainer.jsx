@@ -1,7 +1,7 @@
 import React, { useState, useContext } from 'react';
 import { motion } from 'framer-motion';
 import { FiMail, FiLock } from 'react-icons/fi';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { StateContext, DispatchContext } from './store';
 import { actionType } from './store';
 import firebase from "firebase/compat/app";
@@ -13,6 +13,7 @@ import { useStateValue } from '../context/StateProvider';
 // import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 
 const Login = () => {
+  const navigator = useNavigate();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [{ user }, dispatch] = useStateValue();
@@ -27,8 +28,10 @@ const Login = () => {
       type: actionType.SET_USER,
       user: userCredential.user,
   });
+
   localStorage.setItem("user", JSON.stringify(userCredential.user));
   console.log(userCredential.user);
+  navigator("/dash");
 
   };
 
