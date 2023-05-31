@@ -6,14 +6,17 @@ import React, { useEffect, useState } from "react";
 import { FaSearch } from "react-icons/fa";
 import { FiMenu } from 'react-icons/fi';
 import { TbLogout } from 'react-icons/tb';
+import { VscAccount } from 'react-icons/vsc'
 import { TfiDashboard } from 'react-icons/tfi';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { actionType } from '../context/reducer';
 import { useStateValue } from '../context/StateProvider';
 import { app } from '../firebase.config';
 import Avatar from '../img/avatar.png';
 import Logo from '../img/logo.png';
 import WalletContainer from "./WalletContainer";
+import { GiWallet } from "react-icons/gi"
+import { react } from "plotly.js-dist-min";
 
 const firebaseConfig = {
   // Your Firebase project's configuration object
@@ -34,12 +37,19 @@ const Header = () => {
   const provider = new GoogleAuthProvider();
   const [isMenu, setIsMenu] = useState(false);
   const [{ user }, dispatch] = useStateValue();
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (!firebase.apps.length) {
       firebase.initializeApp(firebaseConfig);
     }
   }, [firebaseConfig]);
+
+  const menuFunct = () => {
+    if (user) {
+      setIsMenu(!isMenu);
+    }
+  }
 
   // const login = async () => {
   //   if (!user) {
@@ -85,21 +95,23 @@ const Header = () => {
       type: actionType.SET_USER,
       user: null,
     });
+    navigate('/sign-up')
+    
   };
 
 
 
-  const [searchValue, setSearchValue] = useState("");
+  // const [searchValue, setSearchValue] = useState("");
 
-  const handleSearchInputChanges = (e) => {
-    setSearchValue(e.target.value);
-  };
+  // const handleSearchInputChanges = (e) => {
+  //   setSearchValue(e.target.value);
+  // };
 
-  const callSearchFunction = (e) => {
-    e.preventDefault();
-    console.log("Search value: ", searchValue);
-    setSearchValue("");
-  };
+  // const callSearchFunction = (e) => {
+  //   e.preventDefault();
+  //   console.log("Search value: ", searchValue);
+  //   setSearchValue("");
+  // };
 
 
 
@@ -146,10 +158,14 @@ const Header = () => {
 
 
 
-            <Link to={"news"} className='flex items-center gap-2'>
+            {user && (
+              <Link to={"wallet"} className='flex items-center gap-2'>
 
-              <li className='text-base text-textColor hover:text-headingColor duration-100 transition-all ease-in-out cursor-pointer'>News</li>
-            </Link>
+                <li className='text-base text-textColor hover:text-headingColor duration-100 transition-all ease-in-out cursor-pointer flex'><GiWallet className="mt-1" />&nbsp;&nbsp;&nbsp;Wallet</li>
+              </Link>
+            )}
+
+
             <Link to={"about-us"} className='flex items-center gap-2'>
               <li className='text-base text-textColor hover:text-headingColor duration-100 transition-all ease-in-out cursor-pointer'>About Us</li>
             </Link>
@@ -178,6 +194,7 @@ const Header = () => {
                 src={user ? user.photoURL : Avatar}
                 className="w-10 min-w-[40px] h-10 min-h-[40px] drop-shadow-xl cursor-pointer rounded-full"
                 alt="userprofile"
+                onClick={menuFunct}
               />
             </Link>
 
@@ -199,24 +216,24 @@ const Header = () => {
 
                     <div>
                       <Link to={"dash"} className='flex items-center gap-2'>
-                        <p className='px-4 py-2 flex items-center gap-3 cursor-pointer hover:bg-slate-200 transition-all duration-100 ease-in-out text-textColor text-base'
+                        <p className="px-4 py-2 flex items-center gap-3 cursor-pointer hover:bg-slate-100 transition-all duration-100 ease-in-out text-textColor text-base"
 
 
                         ><TfiDashboard />Dashboard</p>
                       </Link>
-                      <WalletContainer />
                     </div>
 
                   )
 
                 }
+                <Link to={"/account"}>
 
                 <p
                   className="px-4 py-2 flex items-center gap-3 cursor-pointer hover:bg-slate-100 transition-all duration-100 ease-in-out text-textColor text-base"
-                  onClick={logout}
+                  // onClick={logout}
                 >
-                  <TbLogout />Logout
-                </p>
+                  <VscAccount />Account
+                </p></Link>
               </motion.div>
             )}
           </div>
@@ -272,7 +289,7 @@ const Header = () => {
                 </ul>
 
                 <p className='m-2 p-2 rounded-md shadow:md flex items-center justify-center bg-gray-300 gap-3 cursor-pointer hover:bg-slate-200 transition-all duration-100 ease-in-out text-textColor text-base'>
-                  Log Out<TbLogout />
+                  <VscAccount />Account
                 </p>
               </motion.div>
             )

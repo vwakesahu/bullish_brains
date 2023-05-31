@@ -72,6 +72,8 @@ function Signup() {
         })
           .then(() => {
             console.log("User data stored in Firestore.");
+            navigate("/dash");
+            
           })
           .catch((error) => {
             console.error("Error creating user: ", error);
@@ -80,6 +82,8 @@ function Signup() {
 
       localStorage.setItem("user", JSON.stringify(providerData[0]));
       console.log(providerData);
+      
+
     }
   };
 
@@ -101,6 +105,7 @@ function Signup() {
     });
     localStorage.setItem("user", JSON.stringify(userCredential.user));
     console.log(userCredential.user);
+    navigate("/dash");
 
   };
 
