@@ -34,9 +34,6 @@ const App = () => {
 
         <main className="mt-24 p-8 w-full">
           <Authstock>
-
-
-           
               <Routes>
               <Route path="/account" element={<RequiredAuth><AcountContainer /></RequiredAuth>} />
 
