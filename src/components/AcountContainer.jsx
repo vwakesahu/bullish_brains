@@ -12,21 +12,25 @@ const AcountContainer = () => {
     const [username, setUsername] = useState('');
     const [First, setFirst] = useState('');
     const [Last, setLast] = useState('');
-  const getUser = async () => {
-    const user = firebase.auth().currentUser;
-    if (user) {
-      setEmail(user.email);
-      firebase.firestore().collection('users').doc(user.uid).get().then((value)=>{
-        setUsername(value['username']);
-        setFirst(value['firstname']);
-        setLast(value['lastname']);
-      });
-    }
-  };
+    const getUser = async() => {
+      const user = firebase.auth().currentUser;
+      console.log(user.uid);
+      await firebase.firestore().collection("users").doc(user.uid).get().then((value)=>{
+        console.log(value.data()['username'])
+        setFirst(value.data()['firstname'])
+        setLast(value.data()['lastname'])
+        setEmail(value.data()['email'])
+        setUsername(value.data()['username'])
+        
+      })
+      // console.log(userref)
+    };
+    
+    
 
   useEffect(() => {
     getUser();
-  }, []);
+  },[]);
 
     // const getuser =async()=>{
         
@@ -44,7 +48,7 @@ const AcountContainer = () => {
     //       'email': email,
     //     })
     // }
-
+    // getUser();
     return (
         <div className="flex justify-center items-center h-screen bg-gray-100 ">
           <div className="w-full max-w-md bg-white rounded-lg shadow-lg p-6">

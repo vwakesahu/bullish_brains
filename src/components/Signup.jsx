@@ -62,12 +62,12 @@ function Signup() {
       if (true) {
 
         // const user = userCredential.user;
-        await firebase.firestore().collection("users").add({
-          'firstname': providerData['0']['displayName'],
+        await firebase.firestore().collection("users").doc(firebase.auth().currentUser.uid).set({
+          'firstname': "",
           'lastname': "",
-          'username': "",
+          'username': providerData['0']['displayName'],
           'email': providerData['0']['email'],
-          uid: providerData['0']['uid'],
+          uid: firebase.auth().currentUser.uid,
           wallet: '1000000'
         })
           .then(() => {
@@ -91,7 +91,7 @@ function Signup() {
   const handleSubmit = async (e) => {
     e.preventDefault();
    let userCredential =await firebase.auth().createUserWithEmailAndPassword(email,password);
-   await firebase.firestore().collection('users').add({
+   await firebase.firestore().collection('users').doc(userCredential.user.uid).set({
     firstName,
     lastName,
     username,
